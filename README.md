@@ -24,7 +24,7 @@ A brief description of the project, its purpose, and what it does. Highlight key
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/TKartist/IM_CLAIM_SORTER.git
+   git clone https://github.com/TKartist/SPAM.git
 
 ## Usage
 

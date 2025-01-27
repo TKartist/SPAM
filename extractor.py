@@ -1,4 +1,5 @@
 import requests as req
+import csv
 from msal import ConfidentialClientApplication
 from flask import Flask, request, redirect, session, url_for
 
@@ -7,6 +8,15 @@ from datetime import datetime, timedelta
 
 
 app = Flask(__name__)
+
+def save_emails(emails):
+    try:
+        with open("initial_email_storage.csv", "w", newline="") as f:
+            writer = csv.DictWriter(f, fieldnames=emails[0].keys())
+            writer.writeheader()
+            writer.writerows(emails)
+    except Exception as e:
+        print(f"Error: {e}")
 
 def read_secrets():
     try:
@@ -21,7 +31,7 @@ def read_secrets():
 
 
 def categorize_email(emails):
-    return "these nuts"
+    print("got here")
 
 
 @app.route('/')
@@ -85,7 +95,7 @@ def read_emails():
             }
 
             email_list.append(email_dict)
-
+        save_emails(email_list)
 
     else:
         print(f"Error: {response.status_code}")
