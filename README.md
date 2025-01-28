@@ -45,6 +45,7 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 
 ## TODO
 1. Identify methods for categorizing emails into reviews and NOT
-2. Research libraries for user-sentiment analysis (VADER, TextBlob, and some other original method)
-3. Implement the optimal analysis method and provide supporting tools (visualization and etc.)
-4. Think of training a model for the categorization using Neural Networks. (NLP)
+2. Extract text from the HTML format which the email is downloaded in
+3. Research libraries for user-sentiment analysis (VADER, TextBlob, and some other original method)
+4. Implement the optimal analysis method and provide supporting tools (visualization and etc.)
+5. Think of training a model for the categorization using Neural Networks. (NLP)

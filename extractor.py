@@ -1,7 +1,12 @@
 import msal
 import requests
+from bs4 import BeautifulSoup
 
 GRAPH_API_URL = "https://graph.microsoft.com/v1.0"
+
+def skim_email(text):
+    soup = BeautifulSoup(text, "html.parser")
+    return soup.get_text()
 
 
 def read_secrets():
@@ -36,20 +41,36 @@ def get_emails(access_token, user_id):
         "Authorization": f"Bearer {access_token}"
     }
     
-    messages_endpoint = f"{GRAPH_API_URL}/users/{user_id}/messages?top=13" # top=50 means we are fetching the top 50 emails, it is capped at 999
+    messages_endpoint = f"{GRAPH_API_URL}/users/{user_id}/messages?top=999" # top=50 means we are fetching the top 50 emails, it is capped at 999
     response = requests.get(messages_endpoint, headers=headers)
     
     if response.status_code == 200:
         messages = response.json().get("value", [])
+        res = []
+        counter = 0
+        for message in messages:
+            if (len(message['categories']) == 0 
+            or message['categories'] == ['Automated emails'] 
+            or message['categories'] == ['Unsolicited requests/offers'] 
+            or message['from']['emailAddress']['address'] == "rrms@surgeifrc.org"
+            or message['from']['emailAddress']['address'] == "go@ifrc.org"
+            or message['from']['emailAddress']['address'] == "GO.Staging@ifrc.org"
+            or message['from']['emailAddress']['address'] == "lars.tangen@ifrc.org"
+            or message['from']['emailAddress']['address'] == "IM@ifrc.org"):
+                counter += 1
+                continue
+            print(message["categories"])
+
+            res.append({
+                "subject": message["subject"],
+                "from": message["from"]["emailAddress"]["address"],
+                "receivedDateTime": message["receivedDateTime"],
+                "body": skim_email(message["body"]["content"])
+            })
         with open("output.txt", "w") as f:
-            for message in messages:
-                    for key, value in message.items():
-                        if key == "categories":
-                            f.write(f"{key}: {value}\n")
-                        if key == "sender":
-                            f.write(f"{key}: {value['emailAddress']['name']} <{value['emailAddress']['address']}>\n")
+            f.write(str(res))
         f.close()
-        print("finished")
+        print(counter)
     else:
         raise Exception(f"Error fetching emails: {response.status_code} {response.text}")
 
