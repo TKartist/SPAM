@@ -21,6 +21,7 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 - [Features](#features)
 - [License](#license)
 - [Contact](#contact)
+- [TODO](#todo)
 
 ---
 
@@ -32,5 +33,18 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 
 ## Usage
 
-1. Automatically collects claim emails received on a particular account and sorts/handles them accordingly
-2. Apply NLP techniques and extract meaningful information such as commonly occuring words / user sentiments
+1. Automatically collects claim emails received on the target account
+2. Sort out the relevant review emails using key words, email tags, and other commonly occuring patterns
+3. Apply NLP techniques on pre-processed (lemmatization, tokenization and etc) review data, and extract meaningful information such as commonly 
+   occuring words / user sentiments
+
+## Features
+1. Automatic Collection of Emails
+2. Pre-Processing of reviews
+
+
+## TODO
+1. Identify methods for categorizing emails into reviews and NOT
+2. Research libraries for user-sentiment analysis (VADER, TextBlob, and some other original method)
+3. Implement the optimal analysis method and provide supporting tools (visualization and etc.)
+4. Think of training a model for the categorization using Neural Networks. (NLP)
