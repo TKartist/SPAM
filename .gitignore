@@ -2,3 +2,5 @@ secret_env.txt
 __pycache__/
 myenv/
 trial2.py
+*.csv
+*.txt

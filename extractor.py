@@ -36,19 +36,20 @@ def get_emails(access_token, user_id):
         "Authorization": f"Bearer {access_token}"
     }
     
-    messages_endpoint = f"{GRAPH_API_URL}/users/{user_id}/messages?top=50"
-    
+    messages_endpoint = f"{GRAPH_API_URL}/users/{user_id}/messages?top=13" # top=50 means we are fetching the top 50 emails, it is capped at 999
     response = requests.get(messages_endpoint, headers=headers)
     
     if response.status_code == 200:
         messages = response.json().get("value", [])
-        print(len(messages))
-        for message in messages:
-            print(f"Subject: {message.get('subject')}")
-            print(f"From: {message.get('from', {}).get('emailAddress', {}).get('address')}")
-            print(f"To: {[recipient['emailAddress']['address'] for recipient in message.get('toRecipients', [])]}")
-            print(f"Body Preview: {message.get('bodyPreview')}")
-            print("="*50)
+        with open("output.txt", "w") as f:
+            for message in messages:
+                    for key, value in message.items():
+                        if key == "categories":
+                            f.write(f"{key}: {value}\n")
+                        if key == "sender":
+                            f.write(f"{key}: {value['emailAddress']['name']} <{value['emailAddress']['address']}>\n")
+        f.close()
+        print("finished")
     else:
         raise Exception(f"Error fetching emails: {response.status_code} {response.text}")
 
