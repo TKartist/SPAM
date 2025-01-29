@@ -3,30 +3,17 @@ import ast
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
+from collections import Counter
+# from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 import nltk
 nltk.download('punkt')
 nltk.download('punkt_tab')
 nltk.download('stopwords')
-nltk.download('wordnet')
+nltk.download('wordnet')    
 
+# method 2: using nltk to preprocess the reviews and then analyze the sentiment through machine learning OR deep learning models
 
-def load_emails():
-    with open("output.txt", "r") as f:
-        stringData = f.read()
-        data = ast.literal_eval(stringData)
-
-    # for i in range(10):
-    #     print("*" * 30)
-    #     print(data[i]["subject"])
-    #     print("*" * 30)
-    #     print(data[i]["from"])
-    #     print(data[i]["receivedDateTime"])
-    #     print(data[i]["body"])
-    #     print(data[i]["conversationID"])
-    #     print("=" * 30)
-    #     print("\n\n")
-    
 
 # removing common phrases in emails which could skew the analysis
 def remove_email_phrases(text):
@@ -43,7 +30,9 @@ def preprocess_review(text):
     stop_words = set(stopwords.words('english'))
 
     # some stop words in emails
-    custom_stopwords = {"hi", "hello", "your", "kind", "colleagues", "friends"}
+    custom_stopwords = {"hi", "hello", "email", "address", 
+                        "ifrc", "your", "kind", "colleagues", 
+                        "friends", "unless", }
     stop_words.update(custom_stopwords)
 
     tokens = [word for word in tokens if word not in stop_words]
@@ -55,10 +44,23 @@ def preprocess_review(text):
 
     lemmatizer = WordNetLemmatizer()
     tokens = [lemmatizer.lemmatize(word) for word in tokens]
-    return tokens 
+    return tokens
+
+def overall_words_used():
+    with open("output.txt", "r") as f:
+        stringData = f.readlines()
+        data = [ast.literal_eval(line.strip()) for line in stringData]
+        all_words = []
+        for d in data:
+            all_words += preprocess_review(d[-1]["subject"] + " " + d[-1]["body"])
+        word_freq = Counter(all_words)
+        for word in word_freq.most_common(len(data) * 4):
+            print(word)
 
 # Example usage
 # reviews = ["I love this platform! It's amazing.", "The service was terrible and slow.", "YoU CoulD DO SOOO MUCH BETTER!"]
 # preprocessed_reviews = [preprocess_review(review) for review in reviews]
 # print(preprocessed_reviews)
+
+overall_words_used()
 

@@ -49,7 +49,7 @@ def get_emails(access_token, user_id):
     
     if response.status_code == 200:
         messages = response.json().get("value", [])
-        res = []
+        res = {}
         for message in messages:
             if (len(message['categories']) == 0 
             or message['categories'] == ['Automated emails'] 
@@ -58,18 +58,28 @@ def get_emails(access_token, user_id):
             or message['from']['emailAddress']['address'] == "rrms@surgeifrc.org"
             or message['from']['emailAddress']['address'] == "go@ifrc.org"
             or message['from']['emailAddress']['address'] == "GO.Staging@ifrc.org"
-            or message['from']['emailAddress']['address'] == "lars.tangen@ifrc.org"
-            or message['from']['emailAddress']['address'] == "IM@ifrc.org"):
+            or message['from']['emailAddress']['address'] == "lars.tangen@ifrc.org"):
                 continue
-            res.append({
-                "subject": message["subject"],
-                "from": message["from"]["emailAddress"]["address"],
-                "receivedDateTime": message["receivedDateTime"],
-                "body": skim_email(message["body"]["content"]),
-                "conversationID": message["conversationId"]
-            })
+            if message["conversationId"] in res:
+                res[message["conversationId"]].append({
+                    "subject": message["subject"],
+                    "from": message["from"]["emailAddress"]["address"],
+                    "receivedDateTime": message["receivedDateTime"],
+                    "body": skim_email(message["body"]["content"]),
+                    "conversationID": message["conversationId"]
+                })
+            else:
+                res[message["conversationId"]] = [{
+                    "subject": message["subject"],
+                    "from": message["from"]["emailAddress"]["address"],
+                    "receivedDateTime": message["receivedDateTime"],
+                    "body": skim_email(message["body"]["content"]),
+                    "conversationID": message["conversationId"]
+                }]
         with open("output.txt", "w") as f:
-            f.write(str(res))
+            for _, val in res.items():
+                if len(val) > 1:
+                    f.write(str(val) + "\n")
         f.close()
     else:
         raise Exception(f"Error fetching emails: {response.status_code} {response.text}")
