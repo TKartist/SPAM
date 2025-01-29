@@ -6,7 +6,10 @@ GRAPH_API_URL = "https://graph.microsoft.com/v1.0"
 
 def skim_email(text):
     soup = BeautifulSoup(text, "html.parser")
-    return soup.get_text()
+    email_text = soup.get_text()
+    email_text = email_text.replace("\n", " ")
+    email_text = email_text.split("|")[0].split("From: ")[0]
+    return email_text
 
 
 def read_secrets():
@@ -47,30 +50,27 @@ def get_emails(access_token, user_id):
     if response.status_code == 200:
         messages = response.json().get("value", [])
         res = []
-        counter = 0
         for message in messages:
             if (len(message['categories']) == 0 
             or message['categories'] == ['Automated emails'] 
-            or message['categories'] == ['Unsolicited requests/offers'] 
+            or message['categories'] == ['Unsolicited requests/offers']
+            or "Automatic reply" in message['subject']
             or message['from']['emailAddress']['address'] == "rrms@surgeifrc.org"
             or message['from']['emailAddress']['address'] == "go@ifrc.org"
             or message['from']['emailAddress']['address'] == "GO.Staging@ifrc.org"
             or message['from']['emailAddress']['address'] == "lars.tangen@ifrc.org"
             or message['from']['emailAddress']['address'] == "IM@ifrc.org"):
-                counter += 1
                 continue
-            print(message["categories"])
-
             res.append({
                 "subject": message["subject"],
                 "from": message["from"]["emailAddress"]["address"],
                 "receivedDateTime": message["receivedDateTime"],
-                "body": skim_email(message["body"]["content"])
+                "body": skim_email(message["body"]["content"]),
+                "conversationID": message["conversationId"]
             })
         with open("output.txt", "w") as f:
             f.write(str(res))
         f.close()
-        print(counter)
     else:
         raise Exception(f"Error fetching emails: {response.status_code} {response.text}")
 

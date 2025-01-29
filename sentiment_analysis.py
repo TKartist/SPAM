@@ -1,4 +1,5 @@
 import re
+import ast
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -9,6 +10,23 @@ nltk.download('punkt_tab')
 nltk.download('stopwords')
 nltk.download('wordnet')
 
+
+def load_emails():
+    with open("output.txt", "r") as f:
+        stringData = f.read()
+        data = ast.literal_eval(stringData)
+
+    # for i in range(10):
+    #     print("*" * 30)
+    #     print(data[i]["subject"])
+    #     print("*" * 30)
+    #     print(data[i]["from"])
+    #     print(data[i]["receivedDateTime"])
+    #     print(data[i]["body"])
+    #     print(data[i]["conversationID"])
+    #     print("=" * 30)
+    #     print("\n\n")
+    
 
 # removing common phrases in emails which could skew the analysis
 def remove_email_phrases(text):
