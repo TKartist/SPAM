@@ -45,13 +45,19 @@ def get_emails(access_token, user_id):
     }
     
     messages_endpoint = f"{GRAPH_API_URL}/users/{user_id}/messages?top=999" # top=50 means we are fetching the top 50 emails, it is capped at 999
+
+    # Fetching emails at the endpoint iteratively until no more emails are left (999 at a time to avoid rate limiting)
     while messages_endpoint:
         response = requests.get(messages_endpoint, headers=headers)
         if response.status_code == 200:
             messages = response.json().get("value", [])
             res = {}
             print(len(messages))
+
+            # Handling the emails one by one
             for message in messages:
+
+                # filtering out automated emails, unsolicited requests, and other irrelevant emails
                 if (len(message['categories']) == 0 
                 or message['categories'] == ['Automated emails'] 
                 or message['categories'] == ['Unsolicited requests/offers']
@@ -61,6 +67,8 @@ def get_emails(access_token, user_id):
                 or message['from']['emailAddress']['address'] == "GO.Staging@ifrc.org"
                 or message['from']['emailAddress']['address'] == "lars.tangen@ifrc.org"):
                     continue
+
+                # grouping emails by conversation ID through a dictionary
                 if message["conversationId"] in res:
                     res[message["conversationId"]].append({
                         "subject": message["subject"],
@@ -77,6 +85,8 @@ def get_emails(access_token, user_id):
                         "body": skim_email(message["body"]["content"]),
                         "conversationID": message["conversationId"]
                     }]
+        # store the filtered emails as a text file
+        # to be updated to directly store in a database and perform sentiment analysis in the future
         # with open("output.txt", "w") as f:
         #     for _, val in res.items():
         #         if len(val) > 1:
@@ -90,6 +100,7 @@ def get_emails(access_token, user_id):
             break  # Stop if no more pages exist
 
 
+# Count total number of emails just in case there is a mismatch
 def email_count(access_token, user_id):
     url = f"{GRAPH_API_URL}/users/{user_id}/messages?$count=true"
     headers = {
@@ -109,11 +120,16 @@ def email_count(access_token, user_id):
 
 if __name__ == "__main__":
     try:
+        # read credentials from secret_env.txt
         credentials = read_secrets()
+
+        # collect the access token
         token = get_access_token(credentials)
         print("Access token acquired successfully.")
         user_id = "im@ifrc.org"
         total_emails = email_count(token, user_id)
+
+        # store all read emails in a text file (for now)
         # get_emails(token, user_id, total_emails)
     except Exception as e:
         print(f"Error: {e}")
