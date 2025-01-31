@@ -27,7 +27,7 @@ def plot_issue_frequency():
     plt.plot(df_2['Date'], df_2['User_Acquisition'], marker='x', label='Normalized User Acquisition', color='green')
     plt.xlabel("Date (YYYY-MM)")
     plt.ylabel("Frequency")
-    plt.title("3-Month Moving Average of Issue Frequencies")
+    plt.title("3-Month Moving Average of Issue Frequencies and its' Trend association with User Acquisition")
     plt.xticks(rotation=45)
     plt.legend()
     plt.savefig("issue_frequency_analysis.png")
