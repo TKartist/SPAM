@@ -40,12 +40,11 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 
 ## Features
 1. Automatic Collection of Emails
-2. Pre-Processing of reviews
+2. Pre-Processing of reviews (categorization, extraction of content from HTML)
+3. Groups emails by conversationID
+4. Performs sentiment analysis with vader (Python Library) and word frequencies
 
 
 ## TODO
-1. Identify methods for categorizing emails into reviews and NOT
-2. Extract text from the HTML format which the email is downloaded in
-3. Research libraries for user-sentiment analysis (VADER, TextBlob, and some other original method)
-4. Implement the optimal analysis method and provide supporting tools (visualization and etc.)
-5. Think of training a model for the categorization using Neural Networks. (NLP)
+1. Think of training a model for the categorization using Neural Networks. (NLP)
+2. Find issue behind error occuring when mass-downloading email using GraphAPI
