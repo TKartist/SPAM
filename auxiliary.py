@@ -2,6 +2,9 @@ import ast
 import pandas as pd
 
 
+
+
+
 def read_output():
     with open("output.txt", "r") as f:
         stringData = f.readlines()
