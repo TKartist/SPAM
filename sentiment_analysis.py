@@ -54,7 +54,7 @@ def overall_words_used():
         for d in data:
             all_words += preprocess_review(d[-1]["subject"] + " " + d[-1]["body"])
         word_freq = Counter(all_words)
-        for word in word_freq.most_common(len(data) * 4):
+        for word in word_freq.most_common(len(data) * 3):
             print(word)
 
 # Example usage
