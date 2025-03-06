@@ -35,6 +35,9 @@ while True:
 
 print(f"Total Issues Fetched: {len(all_issues)}")
 
+for key, val in all_issues[0].items():
+    print(f"{key} : {val}")
+
 # # Print issue titles and URLs
 # for issue in all_issues:
 #     print(f"#{issue['number']} - {issue['title']} ({issue['html_url']})")
