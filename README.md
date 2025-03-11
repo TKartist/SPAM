@@ -22,6 +22,7 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 - [License](#license)
 - [Contact](#contact)
 - [TODO](#todo)
+- [Result](#result)
 
 ---
 
@@ -49,3 +50,6 @@ libraries can be used to capture user sentiment OR identify commonly occuring is
 1. Think of training a model for the categorization using Neural Networks. (NLP)
 2. Extract issues from GitHub issues
 3. Collect issues from SIMS slack 
+
+## Result
+![Issue Frequency Analysis](./issue_frequency_analysis.png)

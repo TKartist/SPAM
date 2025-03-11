@@ -6,3 +6,4 @@ trial2.py
 *.txt
 trial3.py
 .env
+.work-folder-info

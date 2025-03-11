@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from auxiliary import read_output
+from email_issue_reader.auxiliary import read_output
 from collections import Counter
 import pandas as pd
 
