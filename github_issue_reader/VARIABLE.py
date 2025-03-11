@@ -33,3 +33,4 @@ ISSUE_COLS = [
     "closed_by"
 ]
 TITLE_PREFIX = "Bumps"
+BOT = "dependabot[bot]"

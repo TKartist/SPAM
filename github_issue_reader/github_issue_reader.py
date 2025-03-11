@@ -1,5 +1,5 @@
 import requests
-from VARIABLE import GITHUB_TOKEN, OWNER, REPO, PARAMS, ALL_ISSUES
+from VARIABLE import GITHUB_TOKEN, OWNER, REPO, PARAMS, ALL_ISSUES, BOT
 import pandas as pd
 
 
@@ -25,6 +25,7 @@ def send_request(params):
         print(f"Error found: {e}")
     return []
 
+        
 
 def collect_issues():
     params = PARAMS.copy()
@@ -40,6 +41,9 @@ def collect_issues():
         params["page"] += 1
 
     df = pd.DataFrame(all_issues)
-    df.to_csv(ALL_ISSUES, index=False)
+    filtered_df = df[df["user"].apply(lambda x: x.get("login") != BOT)]
+    filtered_df.to_csv(ALL_ISSUES, index=False)
 
-    return df
+    return filtered_df
+
+collect_issues()
