@@ -12,3 +12,24 @@ PARAMS = {
     "per_page": 100,
     "page": 1
 }
+
+ALL_ISSUES = "../issues_folder/all_issues.csv"
+OPEN_ISSUES = "../issues_folder/open_issues.csv"
+CLOSED_ISSUES = "../issues_folder/closed_issues.csv"
+
+ISSUE_COLS = [
+    "id",
+    "url",
+    "title",
+    "body",
+    "user",
+    "state",
+    "assignees",
+    "created_at",
+    "updated_at",
+    "closed_at",
+    "author_association",
+    "pull_request",
+    "closed_by"
+]
+TITLE_PREFIX = "Bumps"

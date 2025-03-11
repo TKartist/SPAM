@@ -1,5 +1,5 @@
 import requests
-from VARIABLE import GITHUB_TOKEN, OWNER, REPO, PARAMS
+from VARIABLE import GITHUB_TOKEN, OWNER, REPO, PARAMS, ALL_ISSUES
 import pandas as pd
 
 
@@ -25,6 +25,7 @@ def send_request(params):
         print(f"Error found: {e}")
     return []
 
+
 def collect_issues():
     params = PARAMS.copy()
     all_issues = []
@@ -39,6 +40,6 @@ def collect_issues():
         params["page"] += 1
 
     df = pd.DataFrame(all_issues)
-    df.to_csv("../hello.csv", index=False)
+    df.to_csv(ALL_ISSUES, index=False)
 
-collect_issues()
+    return df
