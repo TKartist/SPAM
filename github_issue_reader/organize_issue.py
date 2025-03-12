@@ -3,7 +3,7 @@ from VARIABLE import ALL_ISSUES, OPEN_ISSUES, CLOSED_ISSUES, ISSUE_COLS, TITLE_P
 import json
 
 def organize_issue():
-    df = pd.read_csv(ALL_ISSUES)
+    df = pd.read_csv(ALL_ISSUES, index_col=False)
 
     df.loc[:, "created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
     df = df[ISSUE_COLS]
@@ -15,5 +15,13 @@ def organize_issue():
     closed_issues = df[df["state"] == "closed"]
     closed_issues.to_csv(CLOSED_ISSUES)
 
-organize_issue()
+def organize_by_user():
+    df = pd.read_csv(ALL_ISSUES, index_col=False)
+    df.loc[:, "created_at"] = pd.to_datetime(df["created_at"], errors="coerce")
+    df = df[ISSUE_COLS]
+
+    dfs = {key: sub_df for key, sub_df in df.groupby("user")}
+
+    for key, df in dfs.items():
+        df.to_csv(f"../issues_user/{key}.csv", index=False)
 

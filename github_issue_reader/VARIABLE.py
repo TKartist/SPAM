@@ -19,6 +19,7 @@ CLOSED_ISSUES = "../issues_folder/closed_issues.csv"
 
 ISSUE_COLS = [
     "id",
+    "number",
     "url",
     "title",
     "body",

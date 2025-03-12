@@ -25,14 +25,19 @@ def send_request(params):
         print(f"Error found: {e}")
     return []
 
-        
+
+def extract_login(x):
+    assignees = []
+    for assignee in x:
+        assignees.append(assignee["login"])
+    return assignees
+
 
 def collect_issues():
     params = PARAMS.copy()
     all_issues = []
 
     while True:
-
         issues = send_request(params)
         all_issues += issues
         if len(issues) == 0:
@@ -42,6 +47,11 @@ def collect_issues():
 
     df = pd.DataFrame(all_issues)
     filtered_df = df[df["user"].apply(lambda x: x.get("login") != BOT)]
+    filtered_df.loc[:, "user"] = filtered_df["user"].apply(lambda x: x.get("login"))
+    filtered_df.loc[:, "closed_by"] = filtered_df["closed_by"].apply(lambda x: x.get("login") if pd.notna(x) else None)
+    filtered_df.loc[:, "pull_request"] = filtered_df["pull_request"].apply(lambda x: x.get("html_url") if pd.notna(x) else None)
+    filtered_df.loc[:, "assignee"] = filtered_df["assignee"].apply(lambda x: x.get("login") if pd.notna(x) else None)
+    filtered_df.loc[:, "assignees"] = filtered_df["assignees"].apply(extract_login)
     filtered_df.to_csv(ALL_ISSUES, index=False)
 
     return filtered_df
