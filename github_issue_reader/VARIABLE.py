@@ -35,3 +35,5 @@ ISSUE_COLS = [
 ]
 TITLE_PREFIX = "Bumps"
 BOT = "dependabot[bot]"
+TRANSFORMER_DIRECTORY = "../local_transformer"
+TRANSFORMER_DNAME = "local_transformer"
