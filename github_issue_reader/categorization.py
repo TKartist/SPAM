@@ -7,6 +7,19 @@ import torch
 import pandas as pd
 import os
 from VARIABLE import TRANSFORMER_DIRECTORY, TRANSFORMER_DNAME
+from torch.utils.data import DataLoader
+
+
+class TextDataset(torch.utils.data.Dataset):
+    def __init__(self, texts):
+        self.texts = texts
+
+    def __len__(self):
+        return len(self.texts)
+
+    def __getitem__(self, idx):
+        return self.texts[idx]
+
 
 
 def load_transformers():
@@ -18,7 +31,7 @@ def load_transformers():
         tokenizer = LongformerTokenizer.from_pretrained(TRANSFORMER_DIRECTORY)
         model = LongformerModel.from_pretrained(TRANSFORMER_DIRECTORY)
     else:
-        os.makedirs(TRANSFORMER_DIRECTORY, exists_ok=True)
+        os.makedirs(TRANSFORMER_DIRECTORY)
         tokenizer = LongformerTokenizer.from_pretrained(model_name)
         model = LongformerModel.from_pretrained(model_name)
         tokenizer.save_pretrained(TRANSFORMER_DIRECTORY)
@@ -31,19 +44,24 @@ def categorize_issues(issues):
     print("Performing the embedding...")
 
     tokenizer, model = load_transformers()
-    inputs = tokenizer(issues, padding=True, truncation=True, max_length=4096, return_tensors="pt")
-    device = "cuda" if torch.cuda.is_availabe() else "cpu"
-    model = model.to(device)
+    dataset = TextDataset(issues)
+    dataloader = DataLoader(dataset, batch_size=2, shuffle=False)
 
-    inputs = {key: value.to(device) for key, value in inputs.items()}
+    embeddings_list = []
+    for batch_texts in dataloader:
+        inputs = tokenizer(
+            batch_texts,
+            padding="max_length",
+            truncation=True,
+            max_length=4096,
+            return_tensors="pt"
+        ).to("cuda" if torch.cuda.is_available() else "cpu")
 
-    with torch.no_grad():
-        outputs = model(**inputs)
-    
-    embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
-    print(f"Embedding Shape: {embeddings.shape} \n")
+        with torch.no_grad():
+            outputs = model(**inputs)
+        embeddings_list += outputs.last_hidden_state[:, 0, :].cpu().numpy()
 
-    return embeddings
+    return embeddings_list
 
 
 def perform_clustering(cluster_count, embeddings, issues):
@@ -77,7 +95,6 @@ def main():
     df.fillna("", inplace=True)
     issues = (df["title"] + '\n' + df["body"]).tolist()
 
-    load_transformers()
     embeddings = categorize_issues(issues)
     clusters = perform_clustering(5, embeddings, issues)
     visualize_cluster(embeddings, clusters, issues)
