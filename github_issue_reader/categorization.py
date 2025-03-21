@@ -1,7 +1,4 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from sklearn.cluster import KMeans
-from sklearn.manifold import TSNE
 from transformers import LongformerTokenizer, LongformerModel
 import torch
 import pandas as pd
@@ -68,33 +65,7 @@ def categorize_issues(issues):
     df["texts"] = issues
 
     df.to_csv("../open_issue_embeddings.csv", index=False)
-    return final_array
 
-
-def perform_clustering(cluster_count, embeddings, issues):
-    print("Performing K-means clustering...")
-    kmeans = KMeans(n_clusters=cluster_count, random_state=42)
-    clusters = kmeans.fit_predict(embeddings)
-    s = ""
-    for i, (text, cluster) in enumerate(zip(issues, clusters)):
-        s += f"🔹 Issue {i+1}: Cluster {cluster}\n  → {text[:100]}...\n"
-    with open("../cluster.txt", "w") as f:
-        f.write(s)
-    f.close()
-    print("clusters saved in cluster.txt")
-    return clusters
-
-
-def visualize_cluster(embeddings, clusters, issues):
-    print("Plotting the clusters...")
-    tsne = TSNE(n_components=2, random_state=42)
-    reduced_embeddings = tsne.fit_transform(embeddings)
-    plt.figure(figsize=(10, 7))
-    plt.scatter(reduced_embeddings[:, 0], reduced_embeddings[:, 1], c=clusters, cmap="viridis", alpha=0.7)
-    for i, txt in enumerate(range(len(issues))):
-        plt.annotate(txt, (reduced_embeddings[i, 0], reduced_embeddings[i, 1]), fontsize=9)
-    plt.title("Longformer-Based GitHub Issue Clustering")
-    plt.savefig("issue_analysis.png")
 
 
 def main():
@@ -102,10 +73,8 @@ def main():
     df.fillna("", inplace=True)
     issues = (df["title"] + '\n' + df["body"]).tolist()
 
-    embeddings = categorize_issues(issues)
-    clusters = perform_clustering(8, embeddings, issues)
-    visualize_cluster(embeddings, clusters, issues)
-    print("Completed the visualization")
+    categorize_issues(issues)
+    print("Completed the vectorization")
 
 
 if __name__ == "__main__":
