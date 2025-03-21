@@ -59,9 +59,12 @@ def categorize_issues(issues):
 
         with torch.no_grad():
             outputs = model(**inputs)
-        embeddings_list += outputs.last_hidden_state[:, 0, :].cpu().numpy()
+        new_embedding = outputs.last_hidden_state[:, 0, :].cpu().numpy()  
+        embeddings_list.append(new_embedding)
+    
+    final_array = np.vstack(embeddings_list)  
 
-    return embeddings_list
+    return final_array
 
 
 def perform_clustering(cluster_count, embeddings, issues):
