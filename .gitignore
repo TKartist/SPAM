@@ -1,3 +1,5 @@
+*/__pycache__/
+open_issue_embeddings/
 secret_env.txt
 __pycache__/
 myenv/

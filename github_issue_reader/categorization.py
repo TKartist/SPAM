@@ -63,7 +63,11 @@ def categorize_issues(issues):
         embeddings_list.append(new_embedding)
     
     final_array = np.vstack(embeddings_list)  
+    df = pd.DataFrame(final_array)
+    df.columns = [f"dim_{i}" for i in range(df.shape[1])]
+    df["texts"] = issues
 
+    df.to_csv("../open_issue_embeddings.csv", index=False)
     return final_array
 
 
@@ -99,7 +103,7 @@ def main():
     issues = (df["title"] + '\n' + df["body"]).tolist()
 
     embeddings = categorize_issues(issues)
-    clusters = perform_clustering(5, embeddings, issues)
+    clusters = perform_clustering(8, embeddings, issues)
     visualize_cluster(embeddings, clusters, issues)
     print("Completed the visualization")
 
