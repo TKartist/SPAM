@@ -2,6 +2,11 @@ from sklearn.cluster import KMeans
 import pandas as pd
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
+from bertopic import BERTopic
+import numpy as np
+from hdbscan import HDBSCAN
+import re
+from collections import Counter
 
 
 def visualize_cluster(embeddings, clusters, issues):
@@ -14,6 +19,7 @@ def visualize_cluster(embeddings, clusters, issues):
         plt.annotate(txt, (reduced_embeddings[i, 0], reduced_embeddings[i, 1]), fontsize=9)
     plt.title("Longformer-Based GitHub Issue Clustering")
     plt.savefig("issue_analysis.png")
+
 
 def perform_clustering(cluster_count, embeddings, issues):
     print("Performing K-means clustering...")
@@ -35,6 +41,22 @@ def perform_clustering(cluster_count, embeddings, issues):
     return clusters
 
 
+'''
+Clustering with BERTopic
+'''
+def bertopic_clustering(embeddings, issues):
+    print("Performing BERTopic clustering...")
+    scan_model = HDBSCAN(min_cluster_size=5, min_samples=2, metric='euclidean')
+
+    topic_model = BERTopic(hdbscan_model=scan_model, language="english")
+    topics, conf_score = topic_model.fit_transform(issues, embeddings)
+
+    topic_info = topic_model.get_topic_info()
+    print(topic_info) 
+    return topics, conf_score
+
+
+
 
 def main():
     df = pd.read_csv("../issues_folder/open_issues.csv")
@@ -45,9 +67,13 @@ def main():
     df_numeric = embeds.apply(pd.to_numeric, errors='coerce')
 
     embeddings = df_numeric.to_numpy()
-    clusters = perform_clustering(15, embeddings, issues)
+    # clusters = perform_clustering(15, embeddings, issues)
+    topics, conf_score = bertopic_clustering(embeddings, issues)
+    df = pd.DataFrame({
+        "issue": issues,
+        "topic": topics,
+        "confidence_score" : conf_score
+    })
     print("Clustering Finished...")
-    visualize_cluster(embeddings, clusters, issues)
-    print("Completed the visualization")
+    df.to_csv("../BERT_TOPIC_CLUSTER.csv", index=False)
 
-main()
