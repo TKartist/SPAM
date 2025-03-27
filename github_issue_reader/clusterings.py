@@ -53,6 +53,19 @@ def bertopic_clustering(embeddings, issues):
 
     topic_info = topic_model.get_topic_info()
     print(topic_info) 
+    fig = topic_model.visualize_topics()
+    top_words = topic_model.visualize_barchart(top_n_topics=10)
+    topic_keywords = {
+        topic: [word for word, _ in topic_model.get_topic(topic)]
+        for topic in topic_model.get_topics()
+        if topic != -1
+    }
+
+    # Convert to DataFrame
+    df_topics = pd.DataFrame.from_dict(topic_keywords, orient="index")
+    df_topics.to_csv("../bertopic_top_words.csv", index_label="topic")
+    top_words.write_html("../topics_words_visual.html")
+    fig.write_html("../topics_visual.html")
     return topics, conf_score
 
 
@@ -77,3 +90,4 @@ def main():
     print("Clustering Finished...")
     df.to_csv("../BERT_TOPIC_CLUSTER.csv", index=False)
 
+main()
