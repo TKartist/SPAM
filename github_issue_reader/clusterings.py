@@ -5,9 +5,16 @@ from sklearn.manifold import TSNE
 from bertopic import BERTopic
 import numpy as np
 from hdbscan import HDBSCAN
+from sklearn.feature_extraction.text import CountVectorizer
+import nltk
+from nltk.corpus import stopwords
 import re
 from collections import Counter
+import umap.umap_ as umap_
+import umap
 
+nltk.download('stopwords')
+stopwords = stopwords.words('english')
 
 def visualize_cluster(embeddings, clusters, issues):
     print("Plotting the clusters...")
@@ -46,27 +53,25 @@ Clustering with BERTopic
 '''
 def bertopic_clustering(embeddings, issues):
     print("Performing BERTopic clustering...")
-    scan_model = HDBSCAN(min_cluster_size=5, min_samples=2, metric='euclidean')
+    scan_model = HDBSCAN(min_cluster_size=3, min_samples=2, metric='euclidean', cluster_selection_method='eom',prediction_data=True)
 
-    topic_model = BERTopic(hdbscan_model=scan_model, language="english")
-    topics, conf_score = topic_model.fit_transform(issues, embeddings)
+    custom_stopwords = stopwords + ["https", "com", "www", "org", "http", "github", "issue", "issues", "ifrc", "open", "closed", "opened", "ifrcgo", "x"]
+    vectorizer_model = CountVectorizer(stop_words=custom_stopwords, ngram_range=(1, 2),min_df=2)
+    
+    # UMAP (helps reduce embedding noise and improve clustering)
+    umap_model = umap_.UMAP(
+        n_neighbors=15,
+        n_components=5,
+        min_dist=0.0,
+        metric='cosine'
+    )
+
+    topic_model = BERTopic(hdbscan_model=scan_model, umap_model=umap_model, vectorizer_model=vectorizer_model, calculate_probabilities=True, verbose=True)
+    topics, prob = topic_model.fit_transform(issues, embeddings)
 
     topic_info = topic_model.get_topic_info()
     print(topic_info) 
-    fig = topic_model.visualize_topics()
-    top_words = topic_model.visualize_barchart(top_n_topics=10)
-    topic_keywords = {
-        topic: [word for word, _ in topic_model.get_topic(topic)]
-        for topic in topic_model.get_topics()
-        if topic != -1
-    }
-
-    # Convert to DataFrame
-    df_topics = pd.DataFrame.from_dict(topic_keywords, orient="index")
-    df_topics.to_csv("../bertopic_top_words.csv", index_label="topic")
-    top_words.write_html("../topics_words_visual.html")
-    fig.write_html("../topics_visual.html")
-    return topics, conf_score
+    return topics, prob
 
 
 
@@ -75,6 +80,7 @@ def main():
     df = pd.read_csv("../issues_folder/open_issues.csv")
     df.fillna("", inplace=True)
     issues = (df["title"] + '\n' + df["body"]).tolist()
+    issue_numbers = df.index.tolist()
     embed_df = pd.read_csv("../open_issue_embeddings.csv")
     embeds = embed_df.drop(columns=["texts"])
     df_numeric = embeds.apply(pd.to_numeric, errors='coerce')
@@ -83,11 +89,12 @@ def main():
     # clusters = perform_clustering(15, embeddings, issues)
     topics, conf_score = bertopic_clustering(embeddings, issues)
     df = pd.DataFrame({
-        "issue": issues,
+        "issue": issue_numbers,
         "topic": topics,
-        "confidence_score" : conf_score
+        "confidence_score": [str(p) for p in conf_score]
     })
     print("Clustering Finished...")
     df.to_csv("../BERT_TOPIC_CLUSTER.csv", index=False)
 
-main()
+if __name__ == "__main__":
+    main()
