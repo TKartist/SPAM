@@ -10,3 +10,5 @@ trial3.py
 .env
 .work-folder-info
 local_transformer/
+topic_split/
+topic_info.xlsx

@@ -53,7 +53,7 @@ Clustering with BERTopic
 '''
 def bertopic_clustering(embeddings, issues):
     print("Performing BERTopic clustering...")
-    scan_model = HDBSCAN(min_cluster_size=3, min_samples=2, metric='euclidean', cluster_selection_method='eom',prediction_data=True)
+    scan_model = HDBSCAN(min_cluster_size=2, min_samples=2, metric='euclidean', cluster_selection_method='eom',prediction_data=True)
 
     custom_stopwords = stopwords + ["https", "com", "www", "org", "http", "github", "issue", "issues", "ifrc", "open", "closed", "opened", "ifrcgo", "x"]
     vectorizer_model = CountVectorizer(stop_words=custom_stopwords, ngram_range=(1, 2),min_df=2)
@@ -71,7 +71,7 @@ def bertopic_clustering(embeddings, issues):
 
     topic_info = topic_model.get_topic_info()
     print(topic_info) 
-    return topics, prob
+    return topics, prob, topic_info
 
 
 
@@ -80,21 +80,23 @@ def main():
     df = pd.read_csv("../issues_folder/open_issues.csv")
     df.fillna("", inplace=True)
     issues = (df["title"] + '\n' + df["body"]).tolist()
-    issue_numbers = df.index.tolist()
+    issue_numbers = df["url"].tolist()
     embed_df = pd.read_csv("../open_issue_embeddings.csv")
     embeds = embed_df.drop(columns=["texts"])
     df_numeric = embeds.apply(pd.to_numeric, errors='coerce')
 
     embeddings = df_numeric.to_numpy()
     # clusters = perform_clustering(15, embeddings, issues)
-    topics, conf_score = bertopic_clustering(embeddings, issues)
+    topics, conf_score, topic_info = bertopic_clustering(embeddings, issues)
     df = pd.DataFrame({
-        "issue": issue_numbers,
+        "issue": issues,
+        "issue_link": issue_numbers,
         "topic": topics,
         "confidence_score": [str(p) for p in conf_score]
     })
     print("Clustering Finished...")
     df.to_csv("../BERT_TOPIC_CLUSTER.csv", index=False)
+    topic_info.to_excel("../topic_info.xlsx", index=False)
 
 if __name__ == "__main__":
     main()
