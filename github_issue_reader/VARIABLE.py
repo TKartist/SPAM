@@ -37,3 +37,12 @@ TITLE_PREFIX = "Bumps"
 BOT = "dependabot[bot]"
 TRANSFORMER_DIRECTORY = "../local_transformer"
 TRANSFORMER_DNAME = "local_transformer"
+CLUSTER_KEYWORDS = {
+    "register/login" : ["login", "register", "signup", "signin", "password", "username", "email", "forgot", "invalid"],
+    "search" : ["search", "find", "filter", "sort", "search result", "searchbox", "searchbar", "inaccurate", "results", "similarity", "relevance"],
+    "permissions" : ["permissions", "access", "accessibility", "error", "authorise", "403", "forbidden", "permission denied", "accessibility issue", "hide", "display", "visible", "editing"],
+    "data issues" : ["blank", "missing", "not clear", "missing data", "incorrect", "wrong data", "field"],
+    "notifications" : ["notification", "alert", "reminder", "receiving", "mailbox"],
+    "linked content" : ["redirect", "404", "link", "content", "directed", "404-page", "url", "broken", "new link"],
+}
+CONSINE_THRESHOLD = 0.95
