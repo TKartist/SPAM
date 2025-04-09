@@ -17,6 +17,7 @@ def tf_idf_clustering(issues, issue_ids):
             "similarity": cosine_similarities
         })
         results = results[results["similarity"] >= CONSINE_THRESHOLD]
+        print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
             results.to_csv(f"../topic_split/register_login.csv", index=False)
@@ -24,7 +25,8 @@ def tf_idf_clustering(issues, issue_ids):
             results.to_csv(f"../topic_split/{label}.csv", index=False)
 
 
-df = pd.read_csv("../open_issue_embeddings.csv")
+df = pd.read_csv("../issues_folder/open_issues.csv")
+df.fillna("", inplace=True)
 issues = (df["title"] + df["body"]).tolist()
 issue_ids = df["id"].tolist()
 tf_idf_clustering(issues, issue_ids)

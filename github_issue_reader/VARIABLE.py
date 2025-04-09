@@ -45,4 +45,4 @@ CLUSTER_KEYWORDS = {
     "notifications" : ["notification", "alert", "reminder", "receiving", "mailbox"],
     "linked content" : ["redirect", "404", "link", "content", "directed", "404-page", "url", "broken", "new link"],
 }
-CONSINE_THRESHOLD = 0.95
+CONSINE_THRESHOLD = 0.1

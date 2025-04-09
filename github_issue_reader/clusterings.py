@@ -82,7 +82,7 @@ def main():
     df_numeric = embeds.apply(pd.to_numeric, errors='coerce')
 
     embeddings = torch.tensor(df_numeric.to_numpy(), dtype=torch.float32)
-
+    
     # clusters = perform_clustering(15, embeddings, issues)
     bertopic_clustering(embeddings, issues)
     # df = pd.DataFrame({
