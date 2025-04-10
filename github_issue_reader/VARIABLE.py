@@ -40,7 +40,7 @@ TRANSFORMER_DNAME = "local_transformer"
 CLUSTER_KEYWORDS = {
     "register/login" : ["login", "register", "signup", "signin", "password", "username", "email", "forgot", "invalid", "error"],
     "search" : ["search", "find", "filter", "sort", "search result", "searchbox", "searchbar", "inaccurate", "results", "similarity", "relevance"],
-    "permissions" : ["permission", "access", "authorise", "403", "forbidden", "403-page", "denied", "hide", "display", "visible", "editing"],
+    "permissions" : ["permission", "permission", "access", "authorise", "403", "forbidden", "403-page", "denied", "hide", "display", "visible", "editing"],
     "data issues" : ["blank", "missing", "not clear", "missing data", "incorrect", "wrong data", "field", "data issue"],
     "notifications" : ["notification", "alert", "reminder", "receiving", "mailbox"],
     "linked content" : ["redirect", "404", "link", "content", "directed", "404-page", "url", "broken", "new link"],
