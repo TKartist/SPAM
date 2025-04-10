@@ -9,7 +9,16 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
+import ast
 
+
+
+
+def read_output():
+    with open("output.txt", "r") as f:
+        stringData = f.readlines()
+        data = [ast.literal_eval(line.strip()) for line in stringData]
+    return data
 
 
 def tf_idf_clustering(issues, issue_ids):
@@ -41,6 +50,11 @@ def perform_clustering():
     issue_ids = df["url"].tolist()
     tf_idf_clustering(issues, issue_ids)
     print("TF-IDF Clustering Finished...")
+
+
+def perform_clustering_emails():
+    print("Performing the clustering on emails...")
+
 
 
 def analyze_clusters():
