@@ -10,18 +10,17 @@ from nltk.tokenize import word_tokenize
 from collections import Counter
 import string
 import ast
-
-
+from analyze_emails import collect_root_emails
 
 
 def read_output():
-    with open("output.txt", "r") as f:
+    with open("../output.txt", "r") as f:
         stringData = f.readlines()
         data = [ast.literal_eval(line.strip()) for line in stringData]
     return data
 
 
-def tf_idf_clustering(issues, issue_ids):
+def tf_idf_clustering(issues, issue_ids, tag):
     for label, keywords in CLUSTER_KEYWORDS.items():
         query = " ".join(keywords)
         vectorizer = TfidfVectorizer()
@@ -37,9 +36,9 @@ def tf_idf_clustering(issues, issue_ids):
         print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
-            results.to_csv(f"../topic_split/register_login.csv", index=False)
+            results.to_csv(f"../topic_split/register_login_{tag}.csv", index=False)
         else:
-            results.to_csv(f"../topic_split/{label}.csv", index=False)
+            results.to_csv(f"../topic_split/{label}_{tag}.csv", index=False)
 
 
 def perform_clustering():
@@ -48,13 +47,20 @@ def perform_clustering():
     issues = (df["title"] + df["body"]).tolist()
     df["url"] = df["url"].apply(lambda x: x.split("/")[-1])
     issue_ids = df["url"].tolist()
-    tf_idf_clustering(issues, issue_ids)
-    print("TF-IDF Clustering Finished...")
+    tf_idf_clustering(issues, issue_ids, "github")
+    print("TF-IDF Clustering GitHub Issues Finished...")
 
 
 def perform_clustering_emails():
+    unwanted_phrase = "[external email] do not click links or attachments unless you expect it from the sender, you check it came from a known email address and you know the content is safe."
     print("Performing the clustering on emails...")
+    email_issues = collect_root_emails()
+    email_issues = [email.lower() for email in email_issues]
 
+    cleaned_list = [s.replace(unwanted_phrase, '').strip() for s in email_issues]
+    ids = list(range(len(cleaned_list)))
+    tf_idf_clustering(cleaned_list, ids, "email")
+    print("TF-IDF Clustering Email Issues Finished...")
 
 
 def analyze_clusters():
@@ -98,5 +104,5 @@ def analyze_clusters():
     print("Cluster Analysis Finished...")
     print(result_df.head())
 
-perform_clustering()
-analyze_clusters()
+
+perform_clustering_emails()
