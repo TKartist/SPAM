@@ -11,6 +11,14 @@ from collections import Counter
 import string
 import ast
 from analyze_emails import collect_root_emails
+import spacy
+import re
+
+nlp = spacy.load("en_core_web_sm")
+stop_words = set(stopwords.words('english'))
+stop_words.update(string.punctuation)
+stop_words.update(["\n", "\r", "\t"])
+stop_words.update({"ifrc", "go", "ifrcgo", "ifrc-go", ".org", ".com", "https", "www", "x", "best regards", "kind regards", "regards", "sincerely", "thank you", "thanks", "cheers", "best", "warm regards", "warmest regards", "yours sincerely", "yours faithfully", "yours truly", "respectfully yours", "with appreciation", "with gratitude", "hello", "dear", "hi", "hey", "greetings", "to whom it may concern", "good morning", "good afternoon", "good evening", "thank you for your email", "thank you for reaching out", "thank you for contacting us", "thank you for your message", "colleagues", "team", "all", "everyone", "all the best", "take care", "best wishes", "wishing you well", "wishing you all the best", "wishing you success", "wishing you happiness", "wishing you joy", "wishing you peace", "wishing you prosperity", "wishing you good health", "wishing you a great day"})
 
 
 def read_output():
@@ -20,19 +28,40 @@ def read_output():
     return data
 
 
-def tf_idf_clustering(issues, issue_ids, tag):
+def lemma_keywords(keywords):
+    cleaned_keywords = []
+    for keyword in keywords:
+        cleaned_keywords.append(nlp(keyword)[0].lemma_)
+    return cleaned_keywords
+
+
+
+def lemmatize_clean_text(issues):
+    cleaned_issues = []
+    for issue in issues:
+        tokens = word_tokenize(issue)
+        filtered = [word for word in tokens if word.isalnum() and word not in stop_words]
+        cleaned_issues.append(" ".join(filtered))
+    return [" ".join([t.lemma_ for t in nlp(text)]) for text in cleaned_issues]
+
+
+def tf_idf_clustering(original, issues, issue_ids, tag):
     for label, keywords in CLUSTER_KEYWORDS.items():
-        query = " ".join(keywords)
+        keys = lemma_keywords(keywords)
+        query = " ".join(keys)
         vectorizer = TfidfVectorizer()
         doc_vector = vectorizer.fit_transform([query] + issues)
         cosine_similarities = cosine_similarity(doc_vector[0:1], doc_vector[1:]).flatten()
 
         results = pd.DataFrame({
             "ids" : issue_ids,
-            "issue": issues,
+            "issue": original,
             "similarity": cosine_similarities
         })
-        results = results[results["similarity"] >= CONSINE_THRESHOLD]
+        if tag == "github":
+            results = results[results["similarity"] >= CONSINE_THRESHOLD]
+        else:
+            results = results[results["similarity"] >= 0.09]
         print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
@@ -52,14 +81,13 @@ def perform_clustering():
 
 
 def perform_clustering_emails():
-    unwanted_phrase = "[external email] do not click links or attachments unless you expect it from the sender, you check it came from a known email address and you know the content is safe."
     print("Performing the clustering on emails...")
     email_issues = collect_root_emails()
     email_issues = [email.lower() for email in email_issues]
+    cleaned_issues = lemmatize_clean_text(email_issues)
 
-    cleaned_list = [s.replace(unwanted_phrase, '').strip() for s in email_issues]
-    ids = list(range(len(cleaned_list)))
-    tf_idf_clustering(cleaned_list, ids, "email")
+    ids = list(range(len(email_issues)))
+    tf_idf_clustering(email_issues, cleaned_issues, ids, "email")
     print("TF-IDF Clustering Email Issues Finished...")
 
 
