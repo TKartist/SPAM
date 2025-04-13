@@ -69,9 +69,6 @@ def bertopic_clustering(embeddings, issues):
 
 
 
-
-
-
 def main():
     df = pd.read_csv("../issues_folder/open_issues.csv")
     df.fillna("", inplace=True)

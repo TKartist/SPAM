@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from VARIABLE import CLUSTER_KEYWORDS, CONSINE_THRESHOLD
 import os
@@ -39,19 +39,25 @@ def lemma_keywords(keywords):
 def lemmatize_clean_text(issues):
     cleaned_issues = []
     for issue in issues:
-        tokens = word_tokenize(issue)
+        cleaned_text = issue.replace("[external email] do not click links or attachments unless you expect it from the sender, you check it came from a known email address and you know the content is safe.", "")
+        cleaned_text = cleaned_text.replace("you don't often get email from", "")
+        cleaned_text = cleaned_text.replace("learn why this is important", "")
+
+        tokens = word_tokenize(cleaned_text)
         filtered = [word for word in tokens if word.isalnum() and word not in stop_words]
         cleaned_issues.append(" ".join(filtered))
     return [" ".join([t.lemma_ for t in nlp(text)]) for text in cleaned_issues]
 
 
 def tf_idf_clustering(original, issues, issue_ids, tag):
+    vectorizer = CountVectorizer()
+    doc_vector = vectorizer.fit_transform(issues)
     for label, keywords in CLUSTER_KEYWORDS.items():
         keys = lemma_keywords(keywords)
         query = " ".join(keys)
-        vectorizer = TfidfVectorizer()
-        doc_vector = vectorizer.fit_transform([query] + issues)
-        cosine_similarities = cosine_similarity(doc_vector[0:1], doc_vector[1:]).flatten()
+        query_vector = vectorizer.transform([query])
+        cosine_similarities = cosine_similarity(query_vector, doc_vector).flatten()
+        print(cosine_similarities)
 
         results = pd.DataFrame({
             "ids" : issue_ids,
@@ -61,7 +67,7 @@ def tf_idf_clustering(original, issues, issue_ids, tag):
         if tag == "github":
             results = results[results["similarity"] >= CONSINE_THRESHOLD]
         else:
-            results = results[results["similarity"] >= 0.09]
+            results = results[results["similarity"] >= 0.1]
         print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
