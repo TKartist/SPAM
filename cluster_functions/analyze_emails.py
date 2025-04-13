@@ -23,6 +23,8 @@ def collect_root_emails():
     issues = []
     for convo in conversations:
         root_email = convo[-1]
+        if root_email["from"] == "billing@mapbox.com" or root_email["from"] == "support@kobotoolbox.org":
+            continue
         issue = root_email["subject"] + " " + root_email["body"]
         issue = clean_email(issue)
         issues.append(issue)

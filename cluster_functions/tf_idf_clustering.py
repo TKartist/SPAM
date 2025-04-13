@@ -57,7 +57,6 @@ def tf_idf_clustering(original, issues, issue_ids, tag):
         query = " ".join(keys)
         query_vector = vectorizer.transform([query])
         cosine_similarities = cosine_similarity(query_vector, doc_vector).flatten()
-        print(cosine_similarities)
 
         results = pd.DataFrame({
             "ids" : issue_ids,
@@ -67,7 +66,7 @@ def tf_idf_clustering(original, issues, issue_ids, tag):
         if tag == "github":
             results = results[results["similarity"] >= CONSINE_THRESHOLD]
         else:
-            results = results[results["similarity"] >= 0.1]
+            results = results[results["similarity"] >= 0.105]
         print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
