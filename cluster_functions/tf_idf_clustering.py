@@ -18,7 +18,7 @@ nlp = spacy.load("en_core_web_sm")
 stop_words = set(stopwords.words('english'))
 stop_words.update(string.punctuation)
 stop_words.update(["\n", "\r", "\t"])
-stop_words.update({"ifrc", "go", "ifrcgo", "ifrc-go", ".org", ".com", "https", "www", "x", "best regards", "kind regards", "regards", "sincerely", "thank you", "thanks", "cheers", "best", "warm regards", "warmest regards", "yours sincerely", "yours faithfully", "yours truly", "respectfully yours", "with appreciation", "with gratitude", "hello", "dear", "hi", "hey", "greetings", "to whom it may concern", "good morning", "good afternoon", "good evening", "thank you for your email", "thank you for reaching out", "thank you for contacting us", "thank you for your message", "colleagues", "team", "all", "everyone", "all the best", "take care", "best wishes", "wishing you well", "wishing you all the best", "wishing you success", "wishing you happiness", "wishing you joy", "wishing you peace", "wishing you prosperity", "wishing you good health", "wishing you a great day"})
+stop_words.update({"ifrc", "red", "cross", "go", "ifrcgo", "ifrc-go", ".org", ".com", "https", "www", "x", "best regards", "kind regards", "regards", "sincerely", "thank you", "thanks", "cheers", "best", "warm regards", "warmest regards", "yours sincerely", "yours faithfully", "yours truly", "respectfully yours", "with appreciation", "with gratitude", "hello", "dear", "hi", "hey", "greetings", "to whom it may concern", "good morning", "good afternoon", "good evening", "thank you for your email", "thank you for reaching out", "thank you for contacting us", "thank you for your message", "colleagues", "team", "all", "everyone", "all the best", "take care", "best wishes", "wishing you well", "wishing you all the best", "wishing you success", "wishing you happiness", "wishing you joy", "wishing you peace", "wishing you prosperity", "wishing you good health", "wishing you a great day"})
 
 
 def read_output():
@@ -35,13 +35,17 @@ def lemma_keywords(keywords):
     return cleaned_keywords
 
 
+def clean_email(issue):
+    cleaned_text = issue.replace("[external email] do not click links or attachments unless you expect it from the sender, you check it came from a known email address and you know the content is safe.", "")
+    cleaned_text = cleaned_text.replace("you don't often get email from", "")
+    cleaned_text = cleaned_text.replace("learn why this is important", "")
+    return cleaned_text
+
 
 def lemmatize_clean_text(issues):
     cleaned_issues = []
     for issue in issues:
-        cleaned_text = issue.replace("[external email] do not click links or attachments unless you expect it from the sender, you check it came from a known email address and you know the content is safe.", "")
-        cleaned_text = cleaned_text.replace("you don't often get email from", "")
-        cleaned_text = cleaned_text.replace("learn why this is important", "")
+        cleaned_text = clean_email(issue)
 
         tokens = word_tokenize(cleaned_text)
         filtered = [word for word in tokens if word.isalnum() and word not in stop_words]
@@ -81,7 +85,7 @@ def perform_clustering():
     issues = (df["title"] + df["body"]).tolist()
     df["url"] = df["url"].apply(lambda x: x.split("/")[-1])
     issue_ids = df["url"].tolist()
-    tf_idf_clustering(issues, issue_ids, "github")
+    tf_idf_clustering(issues, issues, issue_ids, "github")
     print("TF-IDF Clustering GitHub Issues Finished...")
 
 
@@ -120,6 +124,7 @@ def analyze_clusters():
 
             text = " ".join(df["issue"].tolist())
             text = text.lower()
+            text = clean_email(text)
             tokens = word_tokenize(text)
             filtered_tokens = [word for word in tokens if word.isalpha() and word not in stopword]
             word_counts = Counter(filtered_tokens)
@@ -137,5 +142,5 @@ def analyze_clusters():
     print("Cluster Analysis Finished...")
     print(result_df.head())
 
-
-perform_clustering_emails()
+# perform_clustering_emails()
+analyze_clusters()
