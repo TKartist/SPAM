@@ -138,6 +138,5 @@ if __name__ == "__main__":
         # store all read emails in a text file (for now)
         get_emails(token, user_id)
     except Exception as e:
-        print("shinbal")
         print(f"Error: {e}")
 
