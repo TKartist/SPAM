@@ -13,6 +13,7 @@ import ast
 from analyze_emails import collect_root_emails
 import spacy
 import re
+import matplotlib.pyplot as plt
 
 nlp = spacy.load("en_core_web_sm")
 stop_words = set(stopwords.words('english'))
@@ -20,6 +21,10 @@ stop_words.update(string.punctuation)
 stop_words.update(["\n", "\r", "\t"])
 stop_words.update({"ifrc", "red", "cross", "go", "ifrcgo", "ifrc-go", ".org", ".com", "https", "www", "x", "best regards", "kind regards", "regards", "sincerely", "thank you", "thanks", "cheers", "best", "warm regards", "warmest regards", "yours sincerely", "yours faithfully", "yours truly", "respectfully yours", "with appreciation", "with gratitude", "hello", "dear", "hi", "hey", "greetings", "to whom it may concern", "good morning", "good afternoon", "good evening", "thank you for your email", "thank you for reaching out", "thank you for contacting us", "thank you for your message", "colleagues", "team", "all", "everyone", "all the best", "take care", "best wishes", "wishing you well", "wishing you all the best", "wishing you success", "wishing you happiness", "wishing you joy", "wishing you peace", "wishing you prosperity", "wishing you good health", "wishing you a great day"})
 
+similarities = {
+    "email" : [],
+    "github" : []
+}
 
 def read_output():
     with open("../output.txt", "r") as f:
@@ -53,6 +58,17 @@ def lemmatize_clean_text(issues):
     return [" ".join([t.lemma_ for t in nlp(text)]) for text in cleaned_issues]
 
 
+def plot_similarity_distribution(df, category, tag):
+    plt.figure(figsize=(10, 6))
+    plt.hist(df["similarity"], bins=30, color='blue', alpha=0.7)
+    plt.title(f"Similarity Distribution for {category}")
+    plt.xlabel("Cosine Similarity")
+    plt.ylabel("Frequency")
+    plt.grid(axis='y', alpha=0.75)
+    plt.savefig(f"../similarity_distribution_{category}.png")
+    plt.close()
+
+
 def tf_idf_clustering(original, issues, issue_ids, tag):
     vectorizer = CountVectorizer()
     doc_vector = vectorizer.fit_transform(issues)
@@ -67,9 +83,13 @@ def tf_idf_clustering(original, issues, issue_ids, tag):
             "issue": original,
             "similarity": cosine_similarities
         })
+        print(cosine_similarities.tolist())
         if tag == "github":
             results = results[results["similarity"] >= CONSINE_THRESHOLD]
+            similarities["github"] += cosine_similarities.tolist()
+
         else:
+            similarities["email"] += cosine_similarities.tolist()
             results = results[results["similarity"] >= 0.105]
         print(len(results))
         results = results.sort_values(by="similarity", ascending=False)
@@ -98,6 +118,39 @@ def perform_clustering_emails():
     ids = list(range(len(email_issues)))
     tf_idf_clustering(email_issues, cleaned_issues, ids, "email")
     print("TF-IDF Clustering Email Issues Finished...")
+
+
+def plot_similarity_distribution(df, category):
+    plt.figure(figsize=(15, 9))
+    plt.scatter(range(len(df)), df["similarity"], alpha=0.6)
+    plt.axhline(y=0.05, color='red', linestyle='--', label=f'Threshold = 0.05 {len(df[df["similarity"] >= 0.05])} docs')
+    plt.axhline(y=0.07, color='yellow', linestyle='--', label=f'Threshold = 0.07 {len(df[df["similarity"] >= 0.07])} docs')
+    plt.axhline(y=0.09, color='green', linestyle='--', label=f'Threshold = 0.09 {len(df[df["similarity"] >= 0.09])} docs')
+    plt.axhline(y=0.105, color='blue', linestyle='--', label=f'Threshold = 0.105 {len(df[df["similarity"] >= 0.105])} docs')
+    plt.axhline(y=0.3, color='black', linestyle='--', label=f'Threshold = 0.3 {len(df[df["similarity"] >= 0.3])} docs')
+    
+    plt.title(f"Cosine Similarity Distribution for {category} docs")
+    plt.xlabel("Document Index")
+    plt.ylabel("Cosine Similarity")
+    plt.legend()
+    plt.savefig(f"../similarity_distribution_{category}.png")
+    plt.close()
+
+
+def plot_doc_count(df, category):
+    similarity_trhesholds = [round(i * 0.01, 2) for i in range(1, 51)]
+    doc_count = []
+    for threshold in similarity_trhesholds:
+        doc_count.append(len(df[df["similarity"] >= threshold]))
+    plt.figure(figsize=(15, 9))
+    plt.plot(similarity_trhesholds, doc_count)
+    plt.xlabel("Cosine Similarity Threshold")
+    plt.ylabel("Document Count")
+    plt.legend()
+    plt.title(f"Document Count vs Cosine Similarity Threshold for {category} docs")
+    plt.savefig(f"../similarity_threshold_{category}.png")
+    plt.close()
+
 
 
 def analyze_clusters():
@@ -142,5 +195,16 @@ def analyze_clusters():
     print("Cluster Analysis Finished...")
     print(result_df.head())
 
-# perform_clustering_emails()
-analyze_clusters()
+
+
+def generate_similarity_graph():
+    df_email = pd.read_csv("../similarity_email.csv")
+    df_github = pd.read_csv("../similarity_github.csv")
+
+    plot_similarity_distribution(df_email, "email")
+    plot_similarity_distribution(df_github, "github")
+    plot_doc_count(df_email, "email")
+    plot_doc_count(df_github, "github")
+    print("Similarity Graph Generated...")
+
+generate_similarity_graph()
