@@ -5,8 +5,8 @@ __pycache__/
 myenv/
 trial2.py
 *.txt
-BERT_TOPIC_CLUSTER.py
-safer_cluster.py
+BERT_TOPIC_CLUSTER.csv
+safer_cluster.csv
 similarity_email.py
 similarity_github.py
 trial3.py
