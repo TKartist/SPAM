@@ -1,0 +1,13 @@
+category,issue_count,similarity_avg,max_similarity,top_words
+data issues_email,10,0.14230679270003993,0.2418254167033372,data(44) humanitarian(15) hdx(14) report(9) field(9) could(8) email(8) im(8) platform(6) climate(6)
+data issues_github,12,0.13092824174708906,0.2051956704170308,field(37) data(15) report(14) new(13) reports(11) hide(11) fields(9) user(9) health(9) territories(8)
+linked content_email,12,0.16848602877940724,0.3045547950507524,new(9) link(8) red(7) regards(6) links(6) kobo(5) please(5) catalogue(5) survey(5) dear(4)
+linked content_github,7,0.12811311592081048,0.1626978433639921,new(16) page(10) add(9) redirect(7) link(7) user(7) please(6) expected(5) place(4) url(4)
+notifications_email,9,0.1420020905550318,0.1745743121887939,api(11) availability(8) alert(7) team(6) request(6) miro(6) monitor(5) failed(5) email(5) confirmation(5)
+notifications_github,1,0.1613709856144396,0.1613709856144396,notifications(6) settings(4) mailbox(3) expected(2) set(2) get(2) check(2) image(2) receiving(1) account(1)
+permissions_email,16,0.14999090764263656,0.223606797749979,access(36) red(9) would(9) cross(8) dear(8) account(8) platform(7) im(7) kind(7) regards(7)
+permissions_github,1,0.1726745892176028,0.1726745892176028,hide(11) section(6) field(5) whole(4) event(3) rename(2) detail(2) analysis(2) operation(2) upload(2)
+register_login_email,69,0.20755877341666384,0.5333333333333333,email(84) account(62) password(46) red(46) please(43) message(42) cross(38) address(36) access(34) recipient(32)
+register_login_github,5,0.18812439025539937,0.2836136811626027,account(16) email(11) message(10) access(10) user(9) username(8) page(8) login(7) error(7) users(6)
+search_email,2,0.1334676602624603,0.1581138830084189,operation(4) kazakhstan(2) removed(2) ehumukingsleykings(1) finding(1) difficulty(1) sign(1) missing(1) hello(1) unable(1)
+search_github,8,0.21983855116916257,0.3722187502390989,search(43) page(14) results(14) country(13) emergencies(12) find(10) image(9) updates(9) feedback(8) flash(8)

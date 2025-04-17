@@ -1,0 +1,190 @@
+ids,issue,similarity
+656,"Search result page improvements There are opportunities to improve the search result page based on user feedback and internal review:
+https://go.ifrc.org/search?
+- [ ] Accents in search terms #621 
+- [ ] Emergencies table should have 'Start date' attribute (first column)
+- [ ] When I search for country name, it doesn't find new emergencies, as those have iso3 code in the title. Same happens with Reports
+- [ ] Secondary default sorting of Emergencies should be the start date (e.g. when I search for a country, emergencies in the country should be listed by start date (descending))
+- [ ] When user lists all results in a section (e.g. View all results for Emergencies), lists should be sortable by column
+- [x] Ongoing RR Deployments section: it should only show Ongoing deployments #633 
+- [x] Open Surge Alerts section: currently it shows archived, unfilled, closed alerts. It should only show open Alerts
+- [ ] GO page: frequently asked feature is to be able to search for pages on GO. e.g. find pages under Surge Catalogue of Services
+
+- [ ] When searching for 'Afghanistan', two regions are listed (MENA and Africa), while the country is in APAC
+- [ ] Browser back button behavior https://github.com/orgs/IFRCGo/projects/12/views/1?filterQuery=is%3Aopen+search&pane=issue&itemId=24220194
+- [ ] Not all of the attributes of content is searchable at the moment. It needs to be improved based on https://ifrcorg.sharepoint.com/:x:/r/sites/GOIVfordeveloperteam/Shared%20Documents/General/GO%202022/GO%20IM%20Sprint%20-%20September%20-%20Nepal/Search_functionality.xlsx?d=w90d23166bc544907868ed2f962fbf42f&csf=1&web=1&e=R4mPWr",0.22530512055227855
+1582,"[PROD] Search feedback form link is replaced by the DREF feedback form linkThe Search feedback button ('Please let us know') on the Search result page leads to the DREF feedback form instead of the Search feedback form. Please revert back url to the Search feedback form.
+
+https://go.ifrc.org/search
+
+Search feedback form:
+https://forms.office.com/e/YEzYKfMwSB?origin=lprLink
+
+",0.22504224695952912
+621,"[PROD] Different search results with and without accented letters (Türkiye and Côte d'Ivoire)## Issue
+If I search for `Turkiye` (instead of `Türkiye`) or `Cote d'Ivoire` (instead of `Côte d'Ivoire`) because I might not know how to type those accented letters with my keyboard, the search doesn't return correct results.
+
+## Steps to reproduce
+Type `Turkiye` or `Cote d'Ivoire` in the main search box or in the countries dropdown and make note of the different search results.
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/9c2e2495-3117-4afe-8db5-25072bd17f68)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/b649fa61-afec-43d1-ad23-1fc736860c87)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/109c03a8-7879-4d2c-9bca-68daee32286d)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/899c74e0-72e2-40c3-9a8a-870122b7d1ba)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/66e5e570-1917-4546-98ad-38968852e86f)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/2ff7f129-ffe7-49a6-bdda-1a2f17f74e24)
+
+![image](https://github.com/IFRCGo/go-web-app/assets/15220593/45fef1bf-e8ab-478c-9fa7-b3c6ec50bc63)
+
+
+## Expected behaviour
+The search should return identical results regardless of the accents.
+
+## Impact
+There are many search results for country names with and without accents, so users might not realise they're missing part of the search results with their search string. The impact is further exacerbated by legacy country names (`Turkey`, `Turkiye`, and `Türkiye` all return different results). 
+
+## Severity
+TBD.
+
+## Is there a workaround?
+None identified.
+",0.19035712643107194
+1639,"Search doesn't return the operation I'm looking for### Page URL
+
+https://go.ifrc.org/search?keyword=covid
+
+### Environment
+
+Production
+
+### Browser
+
+Chrome
+
+### Operating System
+
+_No response_
+
+### Steps to Reproduce the Issue
+
+I went to the search box and input ""covid"", looking for the global covid appeal/response page.  The dropdown as you type was just filled with 3Ws not with emergency operations.  Then when I clicked enter to get the full search results I had lots of different emergency pages - I think 50 of them - mostly with no associated appeal/dref, just one with a small dref - but none of the results were the CHF670M global appeal that I was looking for.  Is there perhaps a 50 item limit on emergencies in search???
+
+### Expected Behavior
+
+I wanted to see the _Global: COVID-19 pandemic_ emergency page in the results (i.e. https://go.ifrc.org/emergencies/3972/details)
+
+### Actual Behavior
+
+The _Global: COVID-19 pandemic_ was not listed.  I had to go hunting for it manually.  The only reason I found it was because I happen to know that it was associated with Switzerland as a location - but that is not common knowledge.
+Need to be able to find the emergency pages I am looking for.
+Suggest prioritising pages with content/more recent updates, and perhaps also prioritising $$ of appeal in the search.  Especially with epidemics but also with other recurring disasters (typhoons, earthquakes etc.) it is important to be able to find the things we are looking for.
+
+### Priority
+
+None
+
+### Additional Context (Optional)
+
+There are a number of issues with search that I want to report, but as https://github.com/IFRCGo/go-web-app/issues/1582 remains open there is no ability to report search issues that way.  Hence logging this ticket separately!
+
+Thanks a million.",0.17500194924564602
+633,"[PROD] Search result page - Ongoing Rapid response deployments sectionThe search results page shows NOT ongoing deployments under the 'Ongoing rapid response deployments':
+
+![image](https://github.com/IFRCGo/go-frontend/assets/68283148/eacaad42-af72-49bb-862b-8f42ad01744d)
+
+There is an 'Ongoing' attribute of the deployments that should be used to filter deployments in this list.
+
+Similarly 'Open Surge Alerts' section should not how archived alerts:
+
+![image](https://github.com/IFRCGo/go-frontend/assets/68283148/9677c324-a2d2-4a2f-b748-4d07e14e70b4)
+
+
+",0.14344509176673584
+1692,"new naming convention - impact on search - being able to find the emergency I'm looking forHi there, under https://github.com/IFRCGo/go-web-app/issues/1688 there is a conversation re the new structure that has been put in place for auto-naming emergencies according to a pre-specified format.
+
+Separate to the question around whether this design caters well for all necessary scenarios, I wanted to check in specifically about **search** under the new design.
+
+If the desired wording (e.g. the country, or the specific location) is no longer present in the title and it is instead a country ""code"", will the Search functionality be made smart enough to allow the user to find it still with the country name?
+
+e.g. if I search for ""Philippines Typhoons"" I want this to still come up in search even though the title now has ""PHL"" instead of ""Philippines"":  
+`PHL: Cyclone - 10-2024 - Typhoons and Floods`
+
+I am not sure if this is a new requirement (in which case it is urgent) or if it has already been thought about.  But it is critical if changing the structure of the name.
+
+Thanks",0.13898939258387005
+973,"[PROD] Appeal Type column in search results doesn't handle list correctlyWhen searching for an emergency I saw that Appeal Type in the emergencies table isn't parsing a list of appeals correctly (it has the square brackets around the list):
+
+![Screen Shot 2024-05-13 at 10 57 03 AM](https://github.com/IFRCGo/go-web-app/assets/8890661/5dd4b280-7453-4a2a-9cca-2e3be0c4c0a3)
+
+Here's the search URL: https://go.ifrc.org/search?keyword=southern%20africa%20%20drought
+
+Using Firefox, confirmed issue in Chrome as well. ",0.13229224212270435
+1679,"can't easily find Flash Updates### Page URL
+
+https://go.ifrc.org/search?keyword=shear
+
+### Environment
+
+Production
+
+### Browser
+
+x
+
+### Operating System
+
+_No response_
+
+### Steps to Reproduce the Issue
+
+Two flash updates have been issued from the Philippines in the last few days.  Each time I was told by a colleague via a manual email (nothing to do with GO) so I went to GO to look for the information.
+
+I am logged in as an IFRC User (country admin for Philippines)
+
+If I go to the Country Page for Philippines there is no mention of the Flash Updates
+
+If I use the search then neither of the flash updates are returned in the search.
+e.g. https://go.ifrc.org/search?keyword=shear
+returns
+- 5 Projects from various countries from various years, none of which have the word Shear anywhere in the title
+- 5 Reports, two of which have the word Shear in the title but three of which don't - all from at least a year ago if not more
+- 5 emergencies, two of which have the word Shear in the title but three don't
+No Flash updates are returned in search - where I was expecting to see https://go.ifrc.org/flash-updates/363 (... Effects of Shear Line...)
+
+
+e.g. (2) https://go.ifrc.org/search?keyword=dengue
+returns
+- 1 province from Cote d'Ivoire
+- 5 Field Reports and 5 emergencies (all of which are correctly mentioning Dengue)
+- 5 Projects - all for emergencies that have Dengue in the name which is good (the projects themselves don't have Dengue in the title)
+- 5 open surge alerts (all for Dengue)
+
+Ideally I could search for ""Dengue Philippines"" and find https://go.ifrc.org/flash-updates/364 (Dengue Outbreak in Quezon City, Philippines)
+
+
+The only way I can find that i can get to Flash Updates without having been provided with a direct link is to go to the menu Respond/Emergencies/Ongoing Emergencies, click on that link then scroll down the page to the Flash Updates section
+
+
+
+### Expected Behavior
+
+I expected to be able to easily find the Flash Updates, from either the Country page or from Search (when logged in as an IFRC user with admin privileges for that country)
+
+### Actual Behavior
+
+I had to either be given the direct link or navigate via the https://go.ifrc.org/emergencies page
+
+### Priority
+
+Low (Minor inconvenience)
+
+### Additional Context (Optional)
+
+xref https://github.com/IFRCGo/go-web-app/issues/1582 re inability to report Search issues via the form.
+
+Thanks!",0.12020494647927504

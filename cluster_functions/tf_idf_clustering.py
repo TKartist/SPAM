@@ -83,15 +83,16 @@ def tf_idf_clustering(original, issues, issue_ids, tag):
             "issue": original,
             "similarity": cosine_similarities
         })
-        print(cosine_similarities.tolist())
         if tag == "github":
+            back = results[results["similarity"] <= 0.104]
+            back.to_csv(f"../irrelevant_split/other_{label}_{tag}.csv", index=False)
             results = results[results["similarity"] >= CONSINE_THRESHOLD]
             similarities["github"] += cosine_similarities.tolist()
-
         else:
-            similarities["email"] += cosine_similarities.tolist()
+            back = results[results["similarity"] <= 0.104]
+            back.to_csv(f"../irrelevant_split/other_{label}_{tag}.csv", index=False)
             results = results[results["similarity"] >= 0.105]
-        print(len(results))
+            similarities["email"] += cosine_similarities.tolist()
         results = results.sort_values(by="similarity", ascending=False)
         if label == "register/login":
             results.to_csv(f"../topic_split/register_login_{tag}.csv", index=False)
@@ -206,5 +207,3 @@ def generate_similarity_graph():
     plot_doc_count(df_email, "email")
     plot_doc_count(df_github, "github")
     print("Similarity Graph Generated...")
-
-generate_similarity_graph()

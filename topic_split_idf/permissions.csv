@@ -1,0 +1,71 @@
+ids,issue,similarity
+1610,Rename and hide sections/fields in Dref Application Form### Rename **Event Detail** ---> Replace name with "Scenario Analysis" ### Hide the following Section **Operation Overview** - [x] Emergency appeal planned: Hide this field - [x] Upload map: Hide this field - [x] Type of Onset: Let's keep this field but it should default to "Sudden", no option to be changed - [x] Disaster Category: Hide this field - [x] If available please upload Crisis categorization Analysis: Hide this field **Event Detail** - [x] Previous Operations: Hide the whole section - [x] Description of the Event: Hide the whole section, only Total people at risk and Sources of information will remain visible **Action/Needs** ---> Hide the whole section **Operation** - [x] Hide the whole section, only "Total Targeted Population" section and "Will surge personnel be deployed?" will remain visible. **Operational Timeframes and Contacts**---> Stays the same, only hide the Glide number
+**Event Detail** ---> Replace name with ""Scenario Analysis""
+
+### Hide the following Section
+
+**Operation Overview**
+- [x] Emergency appeal planned: Hide this field
+- [x] Upload map: Hide this field
+- [x] Type of Onset: Let's keep this field but it should default to ""Sudden"", no option to be changed
+- [x] Disaster Category: Hide this field
+- [x] If available please upload Crisis categorization Analysis: Hide this field
+
+**Event Detail**
+- [x] Previous Operations: Hide the whole section
+- [x] Description of the Event: Hide the whole section, only Total people at risk and Sources of information will remain visible
+
+**Action/Needs** ---> Hide the whole section
+
+**Operation**
+- [x] Hide the whole section, only ""Total Targeted Population"" section and ""Will surge personnel be deployed?"" will remain visible.
+
+**Operational Timeframes and Contacts**---> Stays the same, only hide the Glide number
+",0.17318004889868416
+1680,"Access denied shows onscreen before the Flash Update page loads properly### Page URL
+
+https://go.ifrc.org/flash-updates/364
+
+### Environment
+
+Production
+
+### Browser
+
+Chrome
+
+### Operating System
+
+_No response_
+
+### Steps to Reproduce the Issue
+
+1. Be logged in as a user that has permission to view Flash Updates
+2. navigate to a particular Flash Update page (either from the link on the [Emergencies page](https://go.ifrc.org/emergencies), or by directly pasting the URL such as https://go.ifrc.org/flash-updates/363
+
+### Expected Behavior
+
+I expected the Flash Update page to load fine
+
+### Actual Behavior
+
+When the page first started loading I saw a 403 permission denied screen, only after that did the page load correctly.
+
+I've tried several times - sometimes the 403 appears only for a tiny fraction of a second, sometimes it appears for longer - but in either case it's an awkward user experience that we need to fix to ensure users don't think something is wrong with the platform!
+
+![Image](https://github.com/user-attachments/assets/5be4f2fe-9056-472f-8e41-21cddde62c9b)
+
+See also [files in my OneDrive (visible to all IFRC)](https://ifrcorg-my.sharepoint.com/:f:/g/personal/imco_philippines_ifrc_org/Ek5lbAQBuJhOgcye9eIbPPsBUNa6miw-nkWVV_rotoavBg?e=2atwW7):
+
+- video of my screen just now
+- HAR file so you can see the timing of the API calls from the browser
+
+Thanks
+
+### Priority
+
+Low (Minor inconvenience)
+
+### Additional Context (Optional)
+
+The page does load correctly, it's just the intermediate phase while loading that the error shows.  The error shows onscreen for longer the slower the internet/longer the latency.",0.14469731100760266

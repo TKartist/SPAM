@@ -1,0 +1,69 @@
+ids,issue,similarity
+1229,"IFRC Delegation Offices Data Maintenance Last year, we received a request from the Health & Care department for the exact coordinates of the IFRC Office delegation. The old data utilized city centroids as coordinates, which prompted us to initiate a process to collect accurate data from the regions. During this process, we discovered the absence of a systematic approach to maintaining this data and identified various sites engaging in parallel tabulation of the same information without a clear maintenance process. This has led to discrepancies across different sites citing the same data.
+
+During the GO sprint discussion, we began an effort to identify data owners for the datasets on the GO platform but were unable to pinpoint a specific owner of the delegations offices data. We then approached the OSG, who tasked the Global IT Planning & Project Management Unit with leading this process. Their ongoing work to transition away from FedNet and ensure easy maintenance of data aligns closely with our intended goal.
+
+This ticket will track and share the progress of this exercise. In the comments below, I will share the work done by Fiona and Jonathan in compiling similar information, which I believe will provide a solid foundation for this initiative.",0.16636900872998683
+934,"Update Health Data Import Script to Incorporate New Choice Field Values
+
+**Description:**
+The health data import script currently in use needs to be updated to accommodate new values for the choice fields. Recently shared health data has introduced additional options for certain fields that were not part of the original data structure. These changes affect Table B's structure and choice fields. Below is a summary of the fields affected and the newly added values:
+
+**Affected Fields and Added Values:**
+1. **Affiliation Field:**
+   - Added: Organizational Facility
+
+2. **Hospital Type Field:**
+   - Added: Mental Health Hospital
+
+3. **Specialized Medical Beyond Primary Level Field:**
+   - Added: 
+     - forensics_services
+     - intensive_care_medicine
+     - neonatology
+     - ophthalmology
+     - oncology
+     - srh
+     - transplantation_services
+
+4. **Blood Services Field:**
+   - Added: hemopurification_hemofiltration
+
+**Action Required:**
+The existing import script needs to be updated to include the newly introduced options for the mentioned fields. This update is crucial for ensuring that the imported health data accurately reflects the latest data structure and choices available.
+
+
+**Priority:** High",0.15295537313542834
+1011,"Country Pages: Improve messaging for `Data not available` cases## Ticket description
+- Setting up this ticket to discuss on improving the messaging in cases where the sections do not have any data. ",0.14260283150709396
+1281,"[PROD] Country Key Indicators missing and source+date not clear## Issue
+The Rapid Needs Assessment for the Hurricane Beryl response needs certain indicators for Barbados as per [SIMS Slack thread](https://sims-ifrc.slack.com/archives/C07C4J5MLQG/p1721988646666929).
+
+They need to know things like Total Population (incl % Male, % Female), Life Expectancy in Years, Under-five mortality rate, Population living in urban areas etc.
+
+I was going to direct them to get some of the figures from [GO Country Page](https://go.ifrc.org/countries/75/profile/overview) however I can't refer them to GO for two reasons:
+
+1. Life Expectancy, Literacy, Poverty, Gender Inequality Index are all blank
+I can see that the first two are due to https://github.com/IFRCGo/go-web-app/issues/571 but I'm not sure why the other two are blank
+2. even for the figures that are there, the source and date are not specified.  e.g. Population is given as 124,438 - and further down it says ""Sources:  The World Bank, UNICEF, HDR"".  How do I know which of these organisations the Population figure is from?  And what date that population figure relates to?  Even if I click through to the links in the Source section it still doesn't give details of exactly where the data for these indicators comes from.
+
+To make this section usable we need to ensure that the data is populated and the sources/dates are clearly identifiable for each indicator.
+
+@mariam-yu ",0.13843836307469737
+1623,"Field Report 3.0Background
+
+The purpose of the Simplified Reporting Session during the KL meeting was to pow wow around the following fundamental issues. 
+
+1.	Reduce Field/Question Count:
+o	Identify and eliminate redundant fields across the field report, and a new Monitoring tool from the Project 3W and Emergency 3W tools.
+2.	Standardize Data Interoperability:
+o	Ensure field names, data types, and formats are consistent between the platforms.
+o	Create a shared field structure to ease the data transfer between tools.
+3.	Use Required/Optional Fields:
+o	Make fields essential for core reporting mandatory, while others are optional, reducing the burden on the users.
+4.	Implement Dynamic Forms:
+o	Conditional questions that only appear based on previous answers can streamline the user experience.
+
+Proposed state
+![Image](https://github.com/user-attachments/assets/da50b6ef-9ed5-40b8-80e2-f31442aea9e8)
+",0.12919800574300586

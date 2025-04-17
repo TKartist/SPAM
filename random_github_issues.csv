@@ -1,0 +1,223 @@
+ids,issue,similarity
+1265,"Show cone of uncertainty, path, and affected areas for GDACS, WFP ADAM and PDC## Task background 
+We have the data related to the cone of uncertainty, path, and affected areas for GDACs, PDC, and WFP ADAM, but currently, we are not showing them in the Risk Module in the GO platform. 
+
+## Behavioral and implementation details
+- @puranban and @ranjan to add
+
+### Development tickets 
+- [x] IFRCGo/go-risk-module-api#9
+- [x] IFRCGo/go-risk-module-api#10
+- [x] IFRCGo/go-web-app#1295
+- [x] IFRCGo/go-web-app#1296
+- [x] #1297
+- [x] #1345
+- [x] #1346
+- [x] #1347
+- [x] #1348
+- [x] #1349
+
+### Review fixes (based on Justin and Mariam's review on 30.10.2024):
+- [x] Map legend: Delete the word ""Map"" from ""Map Sources"" so that it just reads: ""Sources""
+- [x] In the pop-up box for GDACS storms, where it currently says ""Source: [JTWC, or NOAA or other]"" let's replace ""Source:"" with ""Forecast provider:""
+- [x] In the pop-up box for both PDC and for GDACS, replace ""Exposed area"" with ""Exposed area to tropical storm or cyclone strength wind""
+- [x] In the pop-up box for both PDC and GDACS where it says ""Severity"" : 1) first change the text to ""PDC Severity"" or ""GDACS Severity""; and 2) add a tool tip with a link to the source
+- [ ] In the colouring of the exposed area, does this apply to future exposure, past exposure or both? At the moment, it's unclear and we need to make it clear whether its one, the other or both. 
+- [ ] For storm position (at a specific date and time) as denoted by dots: this is currently not working for either the PDC or GDACS events -- nothing happens when you click on the dots
+",0.0272039611851438
+1486,project: Integrate playwright for E2E tests,0.0
+1694,"Info ticket:  disaster type categorisation considerationsHi there, I think there is already at least one ticket for this but I can't find it this moment, so documenting afresh.  Not requesting a specific action under this ticket, just writing it down for those who aren't already aware.  I don't have access to the internal GO team documents - there is also documentation there, which may supplement this post.
+
+**Disaster Types are not always consistent - not even internally consistent within the structured data fields that relate to that particular operation, let alone consistent with the wording chosen to be used for public facing documentation.  Need to resolve approach to this before considering which field to do any structured naming off**
+
+At the moment there is a disaster type for the *appeal/DREF* and a disaster type for the *emergency/event* (bearing in mind not all emergencies have an associated appeal/DREF).  These two don't always match.  Sometimes because the categorisation decision at the point of creating a field report (informal) is not the same as the categorisation decided-on when launching a formal DREF/Appeal.
+
+In other cases they are both aligned at the outset, but the categorisation changes over time (and not all systems are necessarily updated to reflect that changed decision - in the same way that when an appeal is first set up it might not have its name changed in IFRC Financial Systems even when its name is changed in public-facing systems such as GO emergency page).
+
+In still other cases the situation might correctly have multiple relevant categorisations - e.g. where a complex emergency in one country causes a population movement in other countries, with separate operations, but there's a multi-country public-facing appeal set up that covers the whole response.
+
+Similarly, the country/location used in the IFRC Financial Systems as being responsible for the appeal might not be the country/location where the action is actually happening - e.g. Ukraine response appeal was in the IFRC financial systems as Hungary as that's the regional office.  The global Covid response appeal was in the IFRC financial systems as Switzerland (even though in the early days it was a China/Asia response, that later became a global one).
+
+**So, for all these reasons, if deciding to automatically name an emergency page based on data fields then need to be sure the logic is referencing the correct data fields.  Noting that not all data fields are always updated in the same way - financial and reporting systems often need different data to public-facing comms**.
+
+
+Here are examples where the emergency disaster type is different to the appeal disaster type for that emergency - for appeals that are currently at status active on GO.  Some of these may be due to human error, others definitely are not.
+
+![Image](https://github.com/user-attachments/assets/ef65bfd1-e826-426e-8ca6-956712259cd1)
+
+To show you the front end, this is MDRHN024 (Honduras) on GO - on the emergency page it's a cyclone/tropical storm, in the appeal that that emergency is mapped to it is a Flood.
+
+![Image](https://github.com/user-attachments/assets/b6311fb4-27f2-4d59-87ea-f3bbb416717b)
+
+![Image](https://github.com/user-attachments/assets/8841d353-9278-4e95-a54e-65492a587e13)
+",0.0951063937422361
+750,"File downloads loggingThe frontend tasks of https://github.com/IFRCGo/go-api/issues/2065 is to be discussed here.
+Some `/public-file/(?P<fidb64>[0-9A-Za-z]+)/(?P<token>.+)/(?P<filename>.*)` - like URL-s should be shown to the users on GO web-app.
+@batpad @thenav56 @frozenhelium @tovari",0.0
+647,Write implementation details for Fedwide ITT,0.0
+1136,"Double scrolbar appearing in Local Units form in Firefox browser## Description 
+- 2 scroll bars are appearing in the Local Units form while accessing it from Firefox browser
+
+- Link to replicate: https://go-stage.ifrc.org/countries/14/ns-overview/context-and-structure
+
+### Screenshot
+
+
+![Image](https://github.com/IFRCGo/go-web-app/assets/72339626/815d4683-c0a6-4d7f-8294-90dd7a6f81eb)
+
+",0.0
+1495,"Update the Local Unit edit workflow- **Feature:** Allow logged-in RCRC Movement users to edit local unit information.
+- **Tasks:**
+  - Display a change summary after edits are done and allow the user to ""Submit"".
+  - Update front-end with pending edits validation status after submission.
+  - Highlight the fields that have been modified when viewing the form.",0.0
+389,"Highlighted emergency cards interaction - HomepageCan we have the entire card on hover and clickable and not just the title? Also, no need to separate between targeted population link and main link. Entire card should go to the emergency (hover on title not needed, but on the card).
+",0.093761446187699
+1695,"DREF Superticket 2.0 (New features)### Feature Description
+
+New features for the DREF process!
+
+**DREF Application**
+
+_Risk considerations (these changes also need to be in Ops Update and Final Report)_ 
+- [ ] In Operation Section > Risk and Security Considerations change title to ”Risk and Security Considerations (including “management”)” 
+- [ ] In Operation Section > Risk and Security Considerations, the field title “Please indicate about potential operational risk for this operations and mitigation actions” change to “Please analyse and indicate potential risks for this operation, its root causes and mitigation actions.” And add the description: “When identifying the risks, please review the IFRC Risk Management Policy and Framework including the different risk categories. When possible, make sure that your identification of risks includes some analysis of previous incidents and performance of the NS in previous operations.”  
+- [ ] In Operation Section > Risk and Security Considerations, under the field  “Please analyse and indicate potential risks for this operation, its root causes and mitigation actions.” add a link to the “Annex III -Risk Categories.pdf” [Annex III – Risk Categories (1).pdf](https://github.com/user-attachments/files/18903662/Annex.III.Risk.Categories.1.pdf)
+ 
+_PGI considerations (these changes also need to be in Ops Update and Final Report)_ 
+
+- [ ] Under Event Details > Description of Event, under the field “total affected population” add the following with numbers field: 
+- “Estimated male” 
+- “Estimated female” 
+- “Estimate minors” 
+- [ ] Under Event Details > Previous Operations add a field with title: “Did you complete the Child Safeguarding Risk Analysis in previous operations, what was risk level?” With a yes or no box, and short text box to add the risk level. 
+- [ ] Under Operation Section > Risk and security considerations at the start, add the title “Does your National Society have:” and the options with a yes or no box:  
+- anti-fraud and corruption policy,  
+- prevention of sexual exploitation and abuse policy,  
+- child protection/child safeguarding policy,  
+- whistleblower protection policy,  
+- anti-sexual harassment policy? 
+- [ ] In Operation Section > About support services, after the question “How many staff and volunteers will be involved in this operation“ add the following question “Does your volunteer team reflect the gender, age, and cultural diversity of the people you’re helping? What gaps exist in your volunteer team’s gender, age, or cultural diversity, and how are you addressing them to ensure inclusive and appropriate support?”, with the description “This question is about making sure your team includes the right mix of people to best support those affected. For example, if you’re helping single female heads of households, it’s important to have enough female volunteers to make everyone feel comfortable and understood. Including team members who share the same language or cultural background as the people you’re helping can also make a big difference in building trust and providing effective support.”
+- [ ] In Operations timeframe and Contacts > Tracking Data and Contacts add “National Societies’ Integrity focal point”  details, and “National Society’ Hotline” (only phone number) 
+
+_General changes_
+- [ ] Under Operation overview > Essential information, can we replace the description text to: “If a field report related to this event/operation already exists, you can use it to pre-fill matching fields in this request. To do so, select the relevant field report from the drop-down list and click “Copy”.
+- [ ] Under Operation overview > Essential information, “Emergency appeal planned”, delete this field
+- [ ] Under Operation overview > Sharing, add the bottom to share the application in this box and remove from above the form, also, when the operation is not saved, still show the bottom and allow user to share and when accepting, confirm with the user that the application will be saved first to allow sharing. 
+![Image](https://github.com/user-attachments/assets/17af961f-be67-4334-a3e2-8bac1d2d7513)
+- [ ] Under Operation > Planned Intervention: Include a link to the budget summary template.
+- [ ] Under Operational Timeframes and Contact, at the very bottom of the page, can we add a highlighted Save button, and remove continue as is not functional here. 
+![Image](https://github.com/user-attachments/assets/8de0c968-5bb9-4fe8-9d8a-80620ff5845c)
+
+_DREF application – additional descriptions in the online form_ 
+- [ ] Operation overview > Essential Information > Name of National Society --> “Indicate your National Society by selecting it from the drop-down list.”
+- [ ] Disaster Category – Please refer to: https://www.ifrc.org/sites/default/files/2021-07/IFRC%20Emergency%20Response%20Framework%20-%202017.pdf”
+- [ ] Event detail > Description of the Event > What happened, where and when? 
+- “Clearly describe: 
+1. What happened: Briefly explain the nature of the emergency (e.g., flood, earthquake, epidemic). Include key details such as the intensity, and any unique aspects of the event. 
+2. Where: Specify the geographic location(s) affected. Be as precise as possible, including names of countries, regions, cities, or specific areas impacted by the event. 
+3. When: Indicate the date and time when the event occurred or began. If the situation is ongoing, mention that and provide relevant updates on the timeframe.”
+- [ ] Actions/Needs > Other Actors Actions Related To The Current Event > National authorities . “Brief description of actions taken by the national authorities.”
+- [ ] Actions/Needs > Other Actors Actions Related To The Current Event > UN or other actors . “Brief description of actions taken by the UN or other actors.”
+- [ ] Actions/Needs > Needs (Gaps) Identified > Any identified gaps/limitations in the assessment 
+Add guidance: “Consider the following: 
+- Unmet needs: are there specific sectors (e.g., shelter, WASH, health) where needs remain unmet or only partially addressed? 
+- Resource shortages: highlight any shortages in available resources (e.g., funding, personnel, supplies) that limit the ability to meet the identified needs. 
+- Operational challenges: mention any operational constraints that are preventing a full response to the needs (e.g., logistical issues, insufficient capacity). 
+- Coordination issues: note any challenges in coordinating with other actors or agencies that have resulted in gaps in service delivery or response coverage. 
+- Vulnerable groups: identify any specific vulnerable groups whose needs may not have been fully captured or addressed during the assessment (e.g., displaced persons, elderly, people with disabilities).” 
+- [ ] Operation > Objective and Strategy Rationale > Overall objective of the operation 
+- “The objective statement should clearly and concisely describe the primary goal of the operation, focusing on the humanitarian impact and the specific needs the operation aims to address. 
+- The IFRC-DREF operation aims to [primary action] in order to [desired impact] for [target population] affected by [event/disaster], by providing [key services/interventions] and ensuring [core outcomes such as protection, dignity, and resilience] over [operation period].”
+- [ ] Operation > Objective and Strategy Rationale > Operation strategy rationale 
+“Elaborate on the overall plan, strategy and approach of the operation; explain the reasoning behind the chosen strategy for the emergency operation. 
+ Explain how the identified needs/gaps and actions taken/plans are linked. 
+- Highlight the most urgent needs the operation aims to address. 
+- Describe the main priorities and explain why these priorities were chosen based on the specific context of the emergency. 
+- Justify why particular methods and actions were selected and how they are expected to achieve the desired outcomes. 
+- Include any key factors that influence the strategy; mention how these factors were considered in shaping the operation.” 
+- [ ] Operation > Risks and security considerations > Please indicate about potential operational risk for this operations and mitigation actions [when “Add new risk” clicked] 
+“Identify up to 5 key potential risks or threats that could negatively impact the success of the operation. These can range from environmental risks to social or logistical challenges. 
+- What are the primary risks that could affect the operation’s implementation? 
+- Are there any context-specific risks that need to be considered? 
+- How might these risks impact the operation’s objectives, timeline, or resources?” 
+“Mitigation actions are actions or strategies that will be implemented to reduce or manage the identified risks, ensuring the operation can proceed as planned. 
+- What specific measures or strategies will be put in place to mitigate the risks identified? 
+- Will contingency plans or additional resources be required to address these risks?” 
+- [ ] Operation > Risks and security considerations > Please indicate any security and safety concerns for this operation 
+“Describe any specific security or safety threats that could impact the safety of personnel, volunteers, and communities during the operation. 
+- Are there any security concerns related to the areas where the operation will take place (e.g., conflict zones, high-crime areas) 
+- What safety risks could impact the well-being of staff, volunteers, or beneficiaries (e.g., dangerous terrain, health risks)? 
+- Are there any specific security protocols or measures that need to be established or followed during the operation?”
+- [ ] Operation > Planned intervention > Request Amount in CHF. -->“General funding requested to fund the interventions.” 
+- [ ] Operation > Planned intervention > Request Amount in CHF [if at least one intervention selected – general description, no need to add it to each intervention] 
+“List specific activities that will be carried out as part of the intervention in each sector. The activities should directly address the identified needs and align with the operation’s strategic objectives. 
+- What specific actions will be taken in this sector to meet the identified needs?” 
+Start by choosing indicators from the IFRC indicator databank [link] whenever possible. This makes it easier to compare and analyse results across all emergency operations. 
+- Pick indicators that align with the planned activities. This ensures that the indicators accurately reflect the actions being taken on the ground. Missing important indicators could mean missed chances to showcase the positive impact of the work being done. 
+- Keep in mind that more indicators can mean more work. Each indicator selected requires monitoring, tracking, and reporting, so be sure to choose the ones that best reflect the key outcomes of your actions. 
+- Consider the type of indicator unit. For example, it’s often simpler and clearer to track and report on the “number of people” rather than a “percentage of people.” 
+For each indicator, set a target. This helps track progress and measure whether the operation is achieving its key objectives, making it easier to report results later on.”
+- [ ] Operation > About Support Services > How many staff and volunteers will be involved in this operation. Briefly describe their role. [remove “Briefly describe their role.”] 
+“A brief description of the human resources that will be engaged in the operation, including both staff and volunteers. 
+- How many staff members and volunteers are expected to participate? 
+- What specific roles or responsibilities will they have during the operation? 
+- Are there any key leadership positions or coordinators overseeing the activities?"" 
+- [ ] Operation > About Support Services > Will surge personnel be deployed? [if “Yes” selected; remove “Please provide the role profile needed.” from both the general description and the text box”] 
+- Describe the skills and qualifications/profile of the surge personnel or any additional staff (to be) deployed specifically for the operation. 
+- What expertise or skill sets are required for the personnel being deployed? 
+- What roles will these personnel fulfil? 
+- Are there specific tasks or sectors they will be managing?”
+- [ ] Operation > About Support Services > If there is procurement, will it be done by National Society or IFRC? [replace the currently existing description] 
+“Explain the responsibility for procurement activities during the operation. 
+- Who will be responsible for procurement (National Society or IFRC)? 
+- Will procurement involve local or international suppliers? 
+- Will it be for replenishment or for distribution?  
+- If for distribution, how long is the tendering expected to take?  
+- For Cash and Voucher Assistance, what is the status of the Financial Service Provider?” 
+- [ ] Operation > About Support Services > How will this operation be monitored? [replace the currently existing description] 
+“Describe the mechanisms that will be used to track the progress and effectiveness of the operation. 
+- What systems will be used to monitor the operation's activities and outcomes? 
+- How will progress be tracked, and who will be responsible for monitoring? 
+- What indicators or milestones will be used to assess the success of the operation? 
+- Will there be IFRC monitoring visits? How will it be deployed?” 
+- [ ] Operation > About Support Services > Please briefly explain the National Societies communication strategy for this operation. [replace the currently existing description] 
+“Describe how the National Society will manage internal and external communication throughout the operation. 
+- What communication channels will be used to share information internally among teams and externally with stakeholders, partners, and the public? 
+- How will the National Society ensure transparent and effective communication with the affected communities? 
+- Is there a media strategy in place for external communication, such as press releases or social media updates? 
+- Will the IFRC be supporting with communication? What roles will be involved?” 
+
+**DREF export** 
+
+- [ ]  Regions are described in the DREF request as “Affected Regions”, while in the DREF export, they are “Targeted Areas”, these two don’t mean the same.
+[-> Same for the ops update and final report] -Targeted 
+All should say “Targeted Regions”
+
+**Ops Update and Final report (others)** 
+
+- [ ] For Operational Update, under Event Details  Summary of changes  Display the yellow message next to their corresponding Yes/No rows? These messages should also pop up next to the fields, instead of the top of the page (across the submission form) that need to be modified. 
+
+![Image](https://github.com/user-attachments/assets/11b58e4c-ec7e-4cf3-823a-a26b4c23eaa9)
+
+- [ ] Similar to the DREF application form, can we have a highlighted Save button at the bottom of the page on the last page and remove continue bottom (Operational timeframes and contacts)?
+- [ ] For operations update, made the input of a number in actual in the indicators mandatory, even if 0, For final report, lock the indicators title and target, as there should not be any changes at the final report stage
+- [ ] For Operational Update, under Actions/needs, remove the Section about “National society Actions”.
+- [ ] For Final Reports: modify the question about other actions besides the DREF.  (As describe for the Application)
+- [ ] In the Operations Udpate/Summary of changes, the field “are you requesting a second allocation?” to be modified to “Are you requesting an additional allocation?” 
+- [ ] In the Operations Update/ Summary of changes remove the field “Has this event materialised” 
+
+@udaynwa @samshara @tovari 
+
+### Additional Context
+
+_No response_",0.0257503518116581
+1045,"Add TypeScript Type Check along with API Schema ValidationTo ensure the reliability and consistency of our codebase, we should add steps in our CI pipeline to perform TypeScript type checking for the frontend, validate the backend API schema, and generate/check TypeScript types from the OpenAPI schema using `openapi-typescript`. This will help catch type errors and schema inconsistencies early in the development process, improving code quality and reducing potential runtime errors.
+
+### Acceptance Criteria
+-  TypeScript type checking runs successfully as part of the CI pipeline.
+-  API schema validation runs successfully as part of the CI pipeline.
+-  TypeScript types are generated from the OpenAPI schema and type-checked as part of the CI pipeline.
+-  CI pipeline fails if any type errors or schema validation errors are detected.
+-  Documentation is updated to reflect the new type-checking and schema validation steps in the CI process.
+",0.0

@@ -1,0 +1,142 @@
+ids,issue,similarity
+1666,"Redirect not in place for Field Reports changed navigation and COVID sankey 404### Page URL
+
+https://go.ifrc.org/reports/all
+
+### Environment
+
+Production
+
+### Steps to Reproduce the Issue
+
+I was looking at the World Disasters Report 2022 - https://www.ifrc.org/document/world-disasters-report-2022 - as it's required reading for a university short course I'm doing just now - and the World Disaster Report references IFRC GO a number of times.
+
+In particular, the report has several references to the global COVID-19 page https://go.ifrc.org/emergencies/3972 - so I've been looking at that page again for the first time in a while.
+
+There are several broken internal links from that main COVID page - presumably due to the site redesign?  Or perhaps another reason.  
+
+1. on front screen of that emergency it says ""Please see also [field reports](https://go.ifrc.org/reports/all)"" - but that link to /reports/all gives me a 404
+2. on actions tab of that emergency it has an embedded link to https://go.ifrc.org/covid19-3w-sankey which is also returning a 404
+
+![Image](https://github.com/user-attachments/assets/f0a9058e-0256-46c2-8beb-d7a40e582e62)
+
+May you please kindly make sure that these links both go to the place they were intended?  Thanks a million.
+
+xref https://github.com/IFRCGo/go-web-app/issues/1628
+
+### Expected Behavior
+
+Load properly with no 404s
+
+### Actual Behavior
+
+https://go.ifrc.org/reports/all gives me a 404
+https://go.ifrc.org/covid19-3w-sankey gives me a 404
+
+### Priority
+
+Medium (Affects functionality, but there is a workaround)
+
+### Additional Context (Optional)
+
+I put priority as Medium (affects functionality, but there is a workaround) however actually there is no workaround that I can find.  High felt too high though!
+
+Need to make sure that all previously-published or previously-shared links to GO pages go to the right content rather than 404s.
+
+Thanks!",0.24390252366299167
+1687,"Redirect not in place for changed navigation - GO About page returns 404 error### Page URL
+
+https://go.ifrc.org/about
+
+### Environment
+
+Production
+
+### Browser
+
+x
+
+### Operating System
+
+_No response_
+
+### Steps to Reproduce the Issue
+
+I was looking through some past GO platform workshop/reference materials, they directed people to https://go.ifrc.org/about as follows:
+
+> For those new to the GO platform, the user guide along with the video tutorials is available here: https://go.ifrc.org/about.
+
+However that link gives me a 404.  I thought the redirects to new navigation were mostly in place for normal pages (just not the multi-hop redirects like https://github.com/IFRCGo/go-web-app/issues/1628 however this one is a key redirect that seems to not be working.  Was it always not working since the nav changes?
+
+### Expected Behavior
+
+I expected the GO/about page to take me to a page where it tells me all about GO platform and how to use it
+Presumably https://go.ifrc.org/resources (which is now buried deep in the nav)
+
+### Actual Behavior
+
+I got a 404
+
+![Image](https://github.com/user-attachments/assets/7b5c315b-71c8-4eac-bd5a-82d710665a2d)
+
+### Priority
+
+Medium (Affects functionality, but there is a workaround)
+
+### Additional Context (Optional)
+
+xref other missing redirect tickets e.g. https://github.com/IFRCGo/go-web-app/issues/1628 https://github.com/IFRCGo/go-web-app/issues/1666 https://github.com/IFRCGo/go-web-app/issues/730 https://github.com/IFRCGo/go-web-app/issues/1637 etc
+
+- What can we do to ensure all previously-published URLs go to a good page rather than 404s?
+- Is there any monitoring on which URLs people get 404s for?",0.22860139892900264
+1637,"Redirect Obsolete URLs to Recent Ones- [x] Redirect `/reports/{id}` to `/field-reports/{id}`
+
+- [x] Redirect `/deployments` to `/surge/overview`",0.20024528390872565
+1628,"Redirect not in place for Operational Learning changed navigation - and also no reference to it on the page### Page URL
+
+https://go.ifrc.org/preparedness#operational-learning
+
+### Environment
+
+Production
+
+### Browser
+
+Chrome (not that it's relevant)
+
+### Operating System
+
+_No response_
+
+### Steps to Reproduce the Issue
+
+The link to Operational Learning that has been disseminated in a lot of the guidance (e.g. the NS Response Capacity Strengthening job aid, the Red Cross CEA guide, the IFRC IM Strategy 2021024, the BHA grant documentation, and a huge number of other docs and presentations etc.) is https://go.ifrc.org/preparedness#operational-learning
+
+However since the changed GO site navigation, this link does not work any more.  It simply redirects people to the Preparedness page https://go.ifrc.org/preparedness/global-summary which does not mention Operational Learning anywhere.
+
+
+
+
+
+### Expected Behavior
+
+I expected to be directed to the Operational Learning information (now at https://go.ifrc.org/operational-learning but formerly at the link above)
+
+### Actual Behavior
+
+I got navigated to a completely unrelated page with no mention of Operational Learning
+
+### Priority
+
+High (Major functionality is broken)
+
+### Additional Context (Optional)
+
+I put this as high priority, as we need to always make sure that links work reliably if we want people to be able to trust GO.  In the particular case of this link, if we want Operational Learning to be adopted then we need to ensure that people who click on a link they've been sent have some way of accessing the information they're looking for.
+
+For this particular example, please can we either
+
+1. ensure that the URL that has been published takes people directly to the Operational Learning page, or
+2. change the Preparedness page content so that it mentions Operational Learning somewhere, and links people to the new location
+
+Thanks a lot",0.13792737237231367

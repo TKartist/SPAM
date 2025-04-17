@@ -1,0 +1,57 @@
+ids,issue,similarity
+611,"[PROD] can't reset password with a username - even though it says I can## Issue
+I had to reset my password - so went to https://go.ifrc.org/recover-account
+
+My user is from the days when username is not the same as email address.  The screen says I should ""Enter the email/username you used during registration"" - so I did, however it gave me a message saying ""That email is not associated with a user"".
+I could reset the password fine if I put my email address in (it just meant I had to remember which email address I had registered with... I had a note of my username but not which email address it related to).
+
+Anyway, need to make sure the message onscreen matches what the user can actually do - either allow them to enter their username or remove reference to the username on the screen.
+
+Thanks
+
+
+## Impact
+People who registered prior to the change to username approach
+
+## Is there a workaround?
+If people figure out that email will work, then they can enter their email address
+",0.31131527093721567
+855,"[PROD] Login Error Message Is Not Accurate## Issue
+Users receive the 'Invalid username or password' error, even when their account is not active. 
+
+## Steps to reproduce
+You need two GO user accounts (A1 and A2), and their passwords. One of the accounts should have admin permission (A1).
+1. Login to the goadmin page with the account A1, go to the users section, search the user account A2, and uncheck the 'Active' box
+2. Login to the go page with the account A2, and try to login with its credentials
+3. You will receive the 'Invalid username or password'*
+
+## Expected behaviour
+Display to the user a message saying ""Your account is deactivated, contact the IM team at im@ifrc.org for more information.""
+
+## Impact
+ We usually receive more than one message per week, of users trying multiple times to reset their passwords not successfully.
+
+## Severity
+They can not log in to GO.
+
+## Is there a workaround?
+They contact im@ifrc.org
+",0.25786894808591954
+351,"Split home after login from Global - General- User should be redirected to ""Account Information"" page if they arrived to login page from the ""Home"" page
+- User should be redirected back to the original page where they arrived from to the login page
+- Account information page should have the ""Operations following section""
+",0.13866260513372472
+1350,"[PROD] ""Oops! Looks like we ran into some issue!"" Invalid regular expression: invalid group specifier nameA user has emailed the IM mailbox reporting an issue when trying to open the log-in page - as per screenshot, the screen shows
+
+> Oops! Looks like we ran into some issue!
+> Invalid regular expression: invalid group specifier name
+> and a bunch of stuff about moduleEvaluation@[native code]
+
+The user reports that they were using Safari.
+They subsequently tried loading GO using Google Chrome and could access it fine.
+
+The user is therefore not blocked  - and I have only seen it from one user - however thought it worth logging a ticket in case this is something that needs to be fixed.
+
+![GO issue](https://github.com/user-attachments/assets/02eb1df5-2bdf-4675-9709-060ec0c80d28)
+
+",0.10726746093647574
